@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polisetty Prashanth | AI & ML Engineer | Full-Stack & GenAI Developer</title>
+  <meta name="description" content="Portfolio of Polisetty Prashanth - Computer Science (AI & ML) Engineer specializing in Generative AI, RAG architectures, Agentic Commerce, and Python Backend Development." />
+  <meta name="keywords" content="Polisetty Prashanth, AI Engineer, Machine Learning, Generative AI, LangChain, RAG, Python, FastAPI, PayPilot-AI" />
+  <meta name="author" content="Polisetty Prashanth" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Polisetty Prashanth | AI & ML Engineer" />
+  <meta property="og:description" content="AI & ML Engineer specialized in GenAI, RAG Pipelines, Agentic Workflows & Full-Stack Python Backend Services." />
+  <meta property="og:type" content="website" />
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-dark text-light antialiased selection:bg-indigo-500 selection:text-white">
+  
+  <!-- Background Glow & Grid Canvas -->
+  <div class="background-effects">
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Sticky Glassmorphic Navbar -->
+  <header class="navbar-wrapper" id="navbar">
+    <nav class="nav-container">
+      <a href="#hero" class="brand-logo">
+        <span class="code-bracket">&lt;</span>
+        <span class="brand-name">P.Prashanth</span>
+        <span class="code-bracket">/&gt;</span>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-item">About</a></li>
+        <li><a href="#skills" class="nav-item">Skills</a></li>
+        <li><a href="#projects" class="nav-item">Projects</a></li>
+        <li><a href="#experience" class="nav-item">Experience</a></li>
+        <li><a href="#terminal" class="nav-item">Terminal</a></li>
+        <li><a href="#contact" class="nav-item">Contact</a></li>
+      </ul>
+
+      <!-- Action Buttons -->
+      <div class="nav-actions">
+        <a href="Prashanth_Polisetty_Resume.pdf" target="_blank" rel="noopener noreferrer" download="Prashanth_Polisetty_Resume.pdf" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-download"></i>
+          <span>Resume</span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Dropdown -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" class="mobile-nav-link">About</a>
+      <a href="#skills" class="mobile-nav-link">Skills</a>
+      <a href="#projects" class="mobile-nav-link">Projects</a>
+      <a href="#experience" class="mobile-nav-link">Experience</a>
+      <a href="#terminal" class="mobile-nav-link">Terminal</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+      <a href="Prashanth_Polisetty_Resume.pdf" target="_blank" rel="noopener noreferrer" download="Prashanth_Polisetty_Resume.pdf" class="btn btn-primary btn-sm mobile-resume-btn">
+        <i class="fa-solid fa-download"></i> Download Resume
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-container">
+        
+        <div class="badge-status">
+          <span class="status-pulse"></span>
+          <span>Available for AI / Full-Stack Roles</span>
+        </div>
+
+        <h1 class="hero-title">
+          Hi, I'm <span class="gradient-text">Polisetty Prashanth</span>
+        </h1>
+
+        <div class="hero-subtitle">
+          <span>Building </span>
+          <span class="typing-text" id="typingText"></span>
+          <span class="cursor-blink">|</span>
+        </div>
+
+        <p class="hero-description">
+          Computer Science (AI & ML) Engineer with hands-on expertise architecting 
+          <strong>Production RAG pipelines</strong>, <strong>Agentic Commerce</strong>, and high-performance <strong>Python backends</strong>.
+          Experienced in taking applications from concept to live, publicly deployed cloud environments.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="hero-cta-group">
+          <a href="#projects" class="btn btn-primary">
+            <i class="fa-solid fa-rocket"></i>
+            <span>Explore Projects</span>
+          </a>
+          <a href="https://ragbotq.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-glass">
+            <i class="fa-solid fa-bolt text-yellow"></i>
+            <span>Live Streamlit Demo</span>
+          </a>
+          <a href="Prashanth_Polisetty_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline" id="viewResumeBtn">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>View Resume</span>
+          </a>
+        </div>
+
+        <!-- Social Badges & LeetCode Counter -->
+        <div class="hero-stats-bar">
+          <a href="https://github.com/prashanthpolisetty" target="_blank" rel="noopener noreferrer" class="stat-pill" title="GitHub Profile">
+            <i class="fa-brands fa-github"></i>
+            <span>GitHub Profile</span>
+          </a>
+          <a href="https://linkedin.com/in/polisetty-prashanth-5440b5298" target="_blank" rel="noopener noreferrer" class="stat-pill" title="LinkedIn Profile">
+            <i class="fa-brands fa-linkedin"></i>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://leetcode.com/u/polisetty_prashanth/" target="_blank" rel="noopener noreferrer" class="stat-pill highlight-pill" title="View LeetCode Profile">
+            <i class="fa-solid fa-code"></i>
+            <span>LeetCode Profile</span>
+          </a>
+          <a href="mailto:polisheetyprashanth246@gmail.com" class="stat-pill" title="Send Email">
+            <i class="fa-solid fa-envelope"></i>
+            <span>Email Me</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Who I Am</span>
+          <h2 class="section-title">About Me</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="about-grid about-grid-4">
+          <div class="about-card glass-card">
+            <div class="card-icon" style="background: rgba(99,102,241,0.12); color: #818cf8;"><i class="fa-solid fa-brain"></i></div>
+            <h3>Generative AI & RAG</h3>
+            <p>
+              Specialized in architecting retrieval-augmented generation pipelines, autonomous agent swarms (CrewAI, LangChain), and strict schema-validated LLM integrations using Gemini and Llama 3.1.
+            </p>
+          </div>
+
+          <div class="about-card glass-card">
+            <div class="card-icon" style="background: rgba(6,182,212,0.12); color: #22d3ee;"><i class="fa-solid fa-server"></i></div>
+            <h3>Deterministic Backends</h3>
+            <p>
+              Engineering reliable microservices with FastAPI, Flask, PostgreSQL, and ChromaDB. Believer in <em>"AI proposes and reasons; deterministic backends authorize and execute"</em>.
+            </p>
+          </div>
+
+          <div class="about-card glass-card">
+            <div class="card-icon" style="background: rgba(16,185,129,0.12); color: #34d399;"><i class="fa-solid fa-rocket"></i></div>
+            <h3>Ship to Production</h3>
+            <p>
+              Proven track record of deploying AI applications to live cloud environments. RAG Chatbot live on Streamlit Cloud, PayPilot-AI built for the Razorpay Buildathon — from concept to production.
+            </p>
+          </div>
+
+          <div class="about-card glass-card">
+            <div class="card-icon" style="background: rgba(234,179,8,0.12); color: #fbbf24;"><i class="fa-solid fa-code"></i></div>
+            <h3>Competitive Coding & DSA</h3>
+            <p>
+              Consistent problem-solver on <a href="https://leetcode.com/u/polisetty_prashanth/" target="_blank" rel="noopener noreferrer" style="color:#38bdf8; text-decoration:none; font-weight:600;">LeetCode</a> focusing on Arrays, Binary Search, Hash Tables, Two Pointers, Dynamic Programming, and advanced SQL queries using Java and Python.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Skills Section -->
+    <section id="skills" class="section bg-card-dark">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Technical Proficiency</span>
+          <h2 class="section-title">Skills & Ecosystem</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="skills-wrapper">
+          <!-- Skill Category 1 -->
+          <div class="skill-category glass-card">
+            <div class="category-header">
+              <i class="fa-solid fa-wand-magic-sparkles text-indigo"></i>
+              <h3>Generative AI & LLMs</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">LangChain</span>
+              <span class="tag">CrewAI</span>
+              <span class="tag">RAG Architecture</span>
+              <span class="tag">Llama 3.1</span>
+              <span class="tag">Google Gemini API</span>
+              <span class="tag">Sentence Transformers</span>
+              <span class="tag">Vector Search</span>
+              <span class="tag">Prompt Engineering (CoT/Few-Shot)</span>
+            </div>
+          </div>
+
+          <!-- Skill Category 2 -->
+          <div class="skill-category glass-card">
+            <div class="category-header">
+              <i class="fa-solid fa-database text-cyan"></i>
+              <h3>Backend & Databases</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">FastAPI</span>
+              <span class="tag">Flask</span>
+              <span class="tag">ChromaDB</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">Pydantic</span>
+              <span class="tag">RESTful APIs</span>
+              <span class="tag">Razorpay API Integration</span>
+            </div>
+          </div>
+
+          <!-- Skill Category 3 -->
+          <div class="skill-category glass-card">
+            <div class="category-header">
+              <i class="fa-solid fa-code text-purple"></i>
+              <h3>Languages & Core CS</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Java</span>
+              <span class="tag">JavaScript (ES6+)</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">SQL</span>
+              <span class="tag">HTML5 / CSS3</span>
+              <span class="tag">Data Structures & Algorithms</span>
+            </div>
+          </div>
+
+          <!-- Skill Category 4 -->
+          <div class="skill-category glass-card">
+            <div class="category-header">
+              <i class="fa-solid fa-toolbox text-yellow"></i>
+              <h3>Tools, Data & DevOps</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">Git & GitHub</span>
+              <span class="tag">Streamlit</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Scikit-Learn</span>
+              <span class="tag">Pandas / NumPy</span>
+              <span class="tag">VS Code</span>
+              <span class="tag">Cursor</span>
+              <span class="tag">Jupyter Notebooks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">What I've Built</span>
+          <h2 class="section-title">Featured Projects</h2>
+          <div class="section-line"></div>
+          <p class="section-desc">Real-world AI systems, agentic pipelines, and full-stack solutions built with high performance and architectural rigor.</p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="project-filters">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="agentic">Agentic & GenAI</button>
+          <button class="filter-btn" data-filter="fullstack">Full-Stack & Backend</button>
+          <button class="filter-btn" data-filter="fintech">Fintech & Tools</button>
+        </div>
+
+        <!-- Project Grid -->
+        <div class="projects-grid">
+          
+          <!-- Project 1: PayPilot-AI (Flagship) -->
+          <div class="project-card glass-card" data-category="agentic fullstack">
+            <div class="project-header">
+              <div class="project-badge badge-featured">
+                <i class="fa-solid fa-star"></i> Featured / Buildathon
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank" rel="noopener noreferrer" title="View Source Code">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </div>
+
+            <h3 class="project-title">PayPilot-AI: Agentic Commerce Platform</h3>
+            <p class="project-summary">
+              AI-native merchant commerce platform built for the <strong>Razorpay Buildathon (Track 01)</strong>. Implements an 18-step agentic pipeline enabling an AI buyer agent to reason over customer constraints, search product catalogs using semantic RAG vector search, propose contextual upsells, enforce deterministic transaction caps, and gate payments via human-in-the-loop authorization.
+            </p>
+
+            <div class="project-highlights">
+              <div><i class="fa-solid fa-check text-indigo"></i> 18-step agentic commerce & risk decision engine</div>
+              <div><i class="fa-solid fa-check text-indigo"></i> Server-side HMAC-SHA256 Razorpay signature validation</div>
+              <div><i class="fa-solid fa-check text-indigo"></i> Deterministic financial caps (₹1,00,000 safety guardrail)</div>
+            </div>
+
+            <div class="project-tech">
+              <span>FastAPI</span>
+              <span>React 18</span>
+              <span>PostgreSQL</span>
+              <span>Razorpay API</span>
+              <span>Docker</span>
+              <span>Gemini / Groq</span>
+            </div>
+          </div>
+
+          <!-- Project 2: Document RAG Chatbot (Live Demo) -->
+          <div class="project-card glass-card" data-category="agentic">
+            <div class="project-header">
+              <div class="project-badge badge-live">
+                <span class="live-indicator"></span> Live App
+              </div>
+              <div class="project-links">
+                <a href="https://ragbotq.streamlit.app" target="_blank" rel="noopener noreferrer" class="link-live" title="Launch Web Application">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+                <a href="https://github.com/prashanthpolisetty/RAG-bot" target="_blank" rel="noopener noreferrer" title="View Source Code">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </div>
+
+            <h3 class="project-title">Document RAG Chatbot</h3>
+            <p class="project-summary">
+              Interactive Retrieval-Augmented Generation (RAG) web application allowing users to upload dynamic PDF/text documents and query complex contextual insights in real-time.
+            </p>
+
+            <div class="project-highlights">
+              <div><i class="fa-solid fa-check text-cyan"></i> &gt;80% evaluation accuracy with all-MiniLM-L6-v2 embeddings</div>
+              <div><i class="fa-solid fa-check text-cyan"></i> Persistent ChromaDB vector storage for instant retrieval</div>
+              <div><i class="fa-solid fa-check text-cyan"></i> 35% reduced document overhead via recursive async indexing</div>
+            </div>
+
+            <div class="project-tech">
+              <span>Python</span>
+              <span>LangChain</span>
+              <span>ChromaDB</span>
+              <span>Llama 3.1</span>
+              <span>Streamlit</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://ragbotq.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary w-full text-center">
+                <i class="fa-solid fa-play"></i> Open Live App (ragbotq.streamlit.app)
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 3: AI Resume Analyzer -->
+          <div class="project-card glass-card" data-category="agentic">
+            <div class="project-header">
+              <div class="project-badge">GenAI / NLP</div>
+              <div class="project-links">
+                <a href="https://github.com/prashanthpolisetty/AI-Resume-Analyzer" target="_blank" rel="noopener noreferrer" title="View Source Code">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </div>
+
+            <h3 class="project-title">AI Resume Screener & Analyzer</h3>
+            <p class="project-summary">
+              High-throughput AI Resume Evaluator utilizing LangChain and Google Gemini API, increasing profile evaluation processing speed by 15x over manual recruiter screening.
+            </p>
+
+            <div class="project-highlights">
+              <div><i class="fa-solid fa-check text-indigo"></i> Strict Pydantic JSON schema extraction for keyword gaps</div>
+              <div><i class="fa-solid fa-check text-indigo"></i> CoT & few-shot constraints with 80% format consistency</div>
+              <div><i class="fa-solid fa-check text-indigo"></i> Comprehensive ATS scoring and grammatical index output</div>
+            </div>
+
+            <div class="project-tech">
+              <span>Python</span>
+              <span>LangChain</span>
+              <span>Google Gemini API</span>
+              <span>Pydantic</span>
+            </div>
+          </div>
+
+          <!-- Project 4: Meeting Minutes Generator -->
+          <div class="project-card glass-card" data-category="agentic fullstack">
+            <div class="project-header">
+              <div class="project-badge">Speech AI & Automation</div>
+              <div class="project-links">
+                <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" target="_blank" rel="noopener noreferrer" title="View Source Code">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </div>
+
+            <h3 class="project-title">Meeting Minutes Generator</h3>
+            <p class="project-summary">
+              Autonomous AI meeting assistant that transcribes audio recordings locally with OpenAI Whisper, extracts structured summaries, key decisions, and action items via cloud LLMs, and emails participants.
+            </p>
+
+            <div class="project-highlights">
+              <div><i class="fa-solid fa-check text-cyan"></i> Local transcription with Whisper for low latency & privacy</div>
+              <div><i class="fa-solid fa-check text-cyan"></i> Structured synthesis with Groq & Google Gemini APIs</div>
+              <div><i class="fa-solid fa-check text-cyan"></i> Automated participant email dispatch workflow</div>
+            </div>
+
+            <div class="project-tech">
+              <span>TypeScript</span>
+              <span>Python</span>
+              <span>OpenAI Whisper</span>
+              <span>Groq API</span>
+              <span>Gemini API</span>
+            </div>
+          </div>
+
+          <!-- Project 5: Binance Trading Bot -->
+          <div class="project-card glass-card" data-category="fintech">
+            <div class="project-header">
+              <div class="project-badge">Algorithmic Bot</div>
+              <div class="project-links">
+                <a href="https://github.com/prashanthpolisetty/binance-trading-bot" target="_blank" rel="noopener noreferrer" title="View Source Code">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </div>
+
+            <h3 class="project-title">Binance Trading Bot</h3>
+            <p class="project-summary">
+              Automated high-speed cryptocurrency market scanner designed to calculate indicators, identify buy/sell signals, and dispatch trading triggers in under 60 seconds.
+            </p>
+
+            <div class="project-highlights">
+              <div><i class="fa-solid fa-check text-yellow"></i> Sub-minute market telemetry processing & reaction</div>
+              <div><i class="fa-solid fa-check text-yellow"></i> RESTful Binance API order execution protocols</div>
+            </div>
+
+            <div class="project-tech">
+              <span>Python</span>
+              <span>Binance API</span>
+              <span>Financial Algorithms</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience & Education Timeline -->
+    <section id="experience" class="section bg-card-dark">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Career Journey</span>
+          <h2 class="section-title">Experience & Education</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="timeline-container">
+
+          <!-- Experience Item -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">May 2025 – Jun 2025</div>
+            <div class="timeline-content glass-card">
+              <div class="timeline-badge">Internship</div>
+              <h3>Machine Learning Intern</h3>
+              <div class="company-name">Unified Mentor (Remote, India)</div>
+              <ul class="timeline-bullets">
+                <li>Architected end-to-end predictive regression pipelines utilizing Python and Scikit-Learn for House Price Prediction and Mobile Phone Price Estimation models.</li>
+                <li>Conducted exhaustive exploratory data analysis (EDA), handling missing values, correlation heatmaps, feature engineering, and data scaling.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Industrial Training -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2023</div>
+            <div class="timeline-content glass-card">
+              <div class="timeline-badge">Industrial Training</div>
+              <h3>Industrial Engineering Trainee</h3>
+              <div class="company-name">Tata Advanced Systems Limited, Hyderabad</div>
+              <p class="timeline-desc">
+                Conducted precision tool engineering and structural quality compliance for aerospace and industrial components under the CITD program.
+              </p>
+            </div>
+          </div>
+
+          <!-- B.Tech Education -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2024 – 2027</div>
+            <div class="timeline-content glass-card">
+              <div class="timeline-badge">Degree</div>
+              <h3>B.Tech in Computer Science Engineering (AI & ML)</h3>
+              <div class="company-name">Neil Gogte Institute of Technology (NGIT), Hyderabad</div>
+              <div class="academic-score">CGPA: 8.06 / 10.0</div>
+              <p class="timeline-desc">
+                Specialized in Deep Learning, Artificial Intelligence, Natural Language Processing, Database Management, and Advanced Data Structures & Algorithms.
+              </p>
+            </div>
+          </div>
+
+          <!-- Diploma Education -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2020 – 2024</div>
+            <div class="timeline-content glass-card">
+              <div class="timeline-badge">Diploma</div>
+              <h3>Diploma in Tool & Die Making</h3>
+              <div class="company-name">Central Institute of Tool Design (CITD), Hyderabad</div>
+              <div class="academic-score">Score: 74.15%</div>
+              <p class="timeline-desc">
+                Rigorous 4-year engineering foundation in precision mechanics, tooling design, and industrial manufacturing principles.
+              </p>
+            </div>
+          </div>
+
+          <!-- High School -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">Completed 2020</div>
+            <div class="timeline-content glass-card">
+              <div class="timeline-badge">Secondary Education</div>
+              <h3>Secondary School (10th Grade)</h3>
+              <div class="company-name">Navodaya High School, Gadwal</div>
+              <div class="academic-score">CGPA: 9.8 / 10.0</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Certifications Highlight -->
+        <div class="certifications-box glass-card mt-12">
+          <h3 class="cert-title"><i class="fa-solid fa-certificate text-yellow"></i> Verified Certifications</h3>
+          <div class="cert-grid">
+            <div class="cert-item">
+              <span class="cert-badge">Simulation</span>
+              <h4>GenAI Powered Data Analytics Job Simulation</h4>
+              <p>Forage & Tata Group (Jun 2026) — Simulated enterprise data workflows, generating automated analytical insights via Python and GenAI.</p>
+            </div>
+            <div class="cert-item">
+              <span class="cert-badge">Mobile</span>
+              <h4>Mobile App Development (Kotlin) Certification</h4>
+              <p>Comprehensive masterclass covering modern Android architecture, state management, and API connectivity (2024).</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- Interactive Terminal Emulator Section -->
+    <section id="terminal" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Live Interactive CLI</span>
+          <h2 class="section-title">Developer Terminal</h2>
+          <div class="section-line"></div>
+          <p class="section-desc">Type commands to inspect skills, run diagnostic lookups, or download resumes directly from this interactive terminal shell.</p>
+        </div>
+
+        <div class="terminal-window glass-card">
+          <!-- Terminal Header -->
+          <div class="terminal-bar">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="terminal-title">prashanth@portfolio:~ (bash)</div>
+            <div class="terminal-actions">
+              <button id="clearTerminalBtn" class="terminal-btn-icon" title="Clear Console">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Terminal Output Area -->
+          <div class="terminal-body" id="terminalOutput">
+            <div class="terminal-line text-muted">Prashanth Developer Shell v1.0.4 - Type <span class="text-cyan font-bold">help</span> to view available commands.</div>
+            <div class="terminal-line text-muted">Available shortcuts: <span class="cmd-pill">skills</span> <span class="cmd-pill">projects</span> <span class="cmd-pill">paypilot</span> <span class="cmd-pill">resume</span> <span class="cmd-pill">contact</span></div>
+            <br />
+          </div>
+
+          <!-- Terminal Input Row -->
+          <div class="terminal-input-row">
+            <span class="prompt-symbol">visitor@prashanth:~$</span>
+            <input type="text" id="terminalInput" class="terminal-input" placeholder="type 'help' or any command..." autocomplete="off" spellcheck="false" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section bg-card-dark">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Let's Connect</span>
+          <h2 class="section-title">Get In Touch</h2>
+          <div class="section-line"></div>
+          <p class="section-desc">Interested in discussing AI architectures, job opportunities, or engineering collaboration? Feel free to reach out directly!</p>
+        </div>
+
+        <div class="contact-wrapper">
+          <!-- Contact Info Cards -->
+          <div class="contact-info">
+            <a href="mailto:polisheetyprashanth246@gmail.com" class="contact-card glass-card">
+              <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div>
+                <span class="contact-label">Email</span>
+                <span class="contact-value">polisheetyprashanth246@gmail.com</span>
+              </div>
+            </a>
+
+            <a href="tel:+919121990362" class="contact-card glass-card">
+              <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <span class="contact-label">Phone</span>
+                <span class="contact-value">+91-9121990362</span>
+              </div>
+            </a>
+
+            <a href="https://linkedin.com/in/polisetty-prashanth-5440b5298" target="_blank" rel="noopener noreferrer" class="contact-card glass-card">
+              <div class="contact-icon"><i class="fa-brands fa-linkedin"></i></div>
+              <div>
+                <span class="contact-label">LinkedIn</span>
+                <span class="contact-value">polisetty-prashanth-5440b5298</span>
+              </div>
+            </a>
+
+            <a href="https://github.com/prashanthpolisetty" target="_blank" rel="noopener noreferrer" class="contact-card glass-card">
+              <div class="contact-icon"><i class="fa-brands fa-github"></i></div>
+              <div>
+                <span class="contact-label">GitHub</span>
+                <span class="contact-value">github.com/prashanthpolisetty</span>
+              </div>
+            </a>
+
+            <div class="contact-card glass-card">
+              <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div>
+                <span class="contact-label">Location</span>
+                <span class="contact-value">Hyderabad, Telangana, India</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Message Form -->
+          <div class="contact-form-container glass-card">
+            <h3>Send a Message</h3>
+            <form id="contactForm" class="contact-form">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" required placeholder="Jane Doe" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" required placeholder="jane@example.com" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" required placeholder="AI Engineering Opportunity" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" rows="4" required placeholder="Hi Prashanth, I came across your PayPilot-AI and RAG projects..." class="form-control"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-full" id="submitBtn">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Send Message</span>
+              </button>
+              <div id="formStatus" class="form-status"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <span class="code-bracket">&lt;</span>
+        <strong>Polisetty Prashanth</strong>
+        <span class="code-bracket">/&gt;</span>
+        <span class="footer-copy">© 2026. Built with precision & high performance.</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/prashanthpolisetty" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
+        <a href="https://linkedin.com/in/polisetty-prashanth-5440b5298" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="mailto:polisheetyprashanth246@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        <a href="#hero" class="scroll-top-btn" title="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Recruiter AI Assistant Widget -->
+  <div class="ai-widget-container" id="aiWidget">
+    <button class="ai-widget-trigger" id="aiTrigger" aria-label="Open AI Recruiter Assistant">
+      <div class="ai-pulse"></div>
+      <i class="fa-solid fa-robot"></i>
+      <span class="ai-widget-badge">Ask AI</span>
+    </button>
+
+    <div class="ai-widget-drawer glass-card" id="aiDrawer">
+      <div class="ai-drawer-header">
+        <div class="ai-agent-meta">
+          <div class="ai-avatar"><i class="fa-solid fa-sparkles"></i></div>
+          <div>
+            <h4>Prashanth's Assistant</h4>
+            <span class="agent-status"><span class="green-dot"></span> Online • Fast Answers</span>
+          </div>
+        </div>
+        <button class="ai-close-btn" id="aiClose" aria-label="Close Assistant">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="ai-chat-messages" id="aiMessages">
+        <div class="chat-bubble ai-bubble">
+          👋 Hello! I'm Prashanth's AI portfolio agent. Ask me anything about his projects (like <strong>PayPilot-AI</strong> or <strong>RAG Chatbot</strong>), technical skills, or contact info!
+        </div>
+      </div>
+
+      <!-- Quick Prompt Pills -->
+      <div class="ai-quick-prompts">
+        <button class="quick-pill" data-q="What is PayPilot-AI?">⚡ PayPilot-AI details</button>
+        <button class="quick-pill" data-q="What are his GenAI skills?">🤖 GenAI & RAG Skills</button>
+        <button class="quick-pill" data-q="Is there a live demo?">🌐 Live demo link</button>
+        <button class="quick-pill" data-q="How do I contact him?">📬 Contact details</button>
+      </div>
+
+      <form id="aiChatForm" class="ai-input-form">
+        <input type="text" id="aiChatInput" placeholder="Ask about Prashanth..." autocomplete="off" />
+        <button type="submit" aria-label="Send query"><i class="fa-solid fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Resume Modal -->
+  <div class="modal-backdrop" id="resumeModal">
+    <div class="modal-dialog glass-card">
+      <div class="modal-header">
+        <h3><i class="fa-regular fa-file-pdf text-red-400"></i> Polisetty Prashanth - Resume</h3>
+        <button class="modal-close" id="closeModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe src="Prashanth_Polisetty_Resume.pdf#toolbar=1" class="resume-iframe" title="Prashanth Resume PDF"></iframe>
+      </div>
+      <div class="modal-footer">
+        <a href="Prashanth_Polisetty_Resume.pdf" download="Prashanth_Polisetty_Resume.pdf" class="btn btn-primary">
+          <i class="fa-solid fa-download"></i> Download PDF
+        </a>
+        <button class="btn btn-outline" id="closeModalFooterBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
