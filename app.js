@@ -145,6 +145,7 @@ Available commands:
   <span class="text-cyan">projects</span>    : View list of flagship projects & repositories
   <span class="text-cyan">paypilot</span>    : Deep-dive into PayPilot-AI (Razorpay Buildathon)
   <span class="text-cyan">ragbot</span>      : Information on Document RAG Chatbot
+  <span class="text-cyan">meeting</span>     : Information on Meeting Minutes Generator
   <span class="text-cyan">education</span>   : View B.Tech & CITD degree details
   <span class="text-cyan">experience</span>  : View ML internship & industrial training
   <span class="text-cyan">contact</span>     : Get email, phone, GitHub, & LinkedIn
@@ -165,9 +166,9 @@ View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" tar
 `,
     projects: `
 1. <span class="text-indigo font-bold">PayPilot-AI</span>: Agentic commerce platform for Razorpay Buildathon (Track 01)
-2. <span class="text-cyan font-bold">Document RAG Chatbot</span>: Live interactive PDF/text RAG bot (ragbotq.streamlit.app)
+2. <span class="text-cyan font-bold">Document RAG Chatbot</span>: Live interactive PDF/text RAG bot (<a href="https://ragbotq.streamlit.app" target="_blank" class="text-indigo">ragbotq.streamlit.app</a>)
 3. <span class="text-purple font-bold">AI Resume Analyzer</span>: High-throughput candidate screener using Gemini & Pydantic
-4. <span class="text-yellow font-bold">Meeting Minutes Generator</span>: Whisper local audio transcription + Groq/Gemini synthesis
+4. <span class="text-yellow font-bold">Meeting Minutes Generator</span>: Live deployed app (<a href="https://meeting-minutes-frontend.onrender.com" target="_blank" class="text-indigo">meeting-minutes-frontend.onrender.com</a>)
 5. <span class="text-muted font-bold">Binance Trading Bot</span>: Sub-minute algorithmic cryptocurrency execution bot
 `,
     paypilot: `
@@ -183,6 +184,14 @@ Repo: <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank
 • Evaluation accuracy >80% with all-MiniLM-L6-v2 embeddings
 • Persistent ChromaDB vector storage + Llama 3.1 inference
 • Live Streamlit app: <a href="https://ragbotq.streamlit.app" target="_blank" class="text-indigo">ragbotq.streamlit.app</a>
+`,
+    meeting: `
+<span class="text-yellow font-bold">Meeting Minutes Generator</span>
+• Autonomous AI meeting assistant with local Whisper transcription
+• Structured synthesis of summaries, key decisions & action items via Groq & Gemini
+• Automated participant email dispatch workflow
+• Live Deployed App: <a href="https://meeting-minutes-frontend.onrender.com" target="_blank" class="text-indigo">meeting-minutes-frontend.onrender.com</a>
+Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" target="_blank" class="text-cyan">github.com/prashanthpolisetty/Meeting-minutes-Generator</a>
 `,
     education: `
 • <span class="text-indigo font-bold">B.Tech in CSE (AI & ML)</span>: Neil Gogte Institute of Technology (2024–2027) | CGPA: 8.06
@@ -329,8 +338,12 @@ function initAiAssistant() {
       return `🤖 Prashanth specializes in <strong>Retrieval-Augmented Generation (RAG)</strong> and autonomous agents. He uses LangChain, CrewAI, ChromaDB vector stores, HuggingFace Sentence Transformers, and Google Gemini / Llama 3.1 with strict Pydantic JSON schemas and Chain-of-Thought prompting.`;
     }
 
+    if (q.includes('meeting') || q.includes('minutes') || q.includes('whisper') || q.includes('transcri')) {
+      return `📝 The <strong>Meeting Minutes Generator</strong> is an autonomous AI meeting assistant that transcribes audio with Whisper, extracts summaries & action items via Groq/Gemini, and emails participants. It's live and deployed at <a href="https://meeting-minutes-frontend.onrender.com" target="_blank" style="color:#38bdf8;text-decoration:underline;">meeting-minutes-frontend.onrender.com</a>!`;
+    }
+
     if (q.includes('live') || q.includes('demo') || q.includes('stream')) {
-      return `🌐 Yes! Prashanth's <strong>Document RAG Chatbot</strong> is publicly deployed and live right now at <a href="https://ragbotq.streamlit.app" target="_blank" style="color:#38bdf8;text-decoration:underline;">ragbotq.streamlit.app</a>. Try uploading a PDF there!`;
+      return `🌐 Prashanth has multiple live apps deployed!<br/>• <strong>Document RAG Chatbot</strong>: <a href="https://ragbotq.streamlit.app" target="_blank" style="color:#38bdf8;text-decoration:underline;">ragbotq.streamlit.app</a><br/>• <strong>Meeting Minutes Generator</strong>: <a href="https://meeting-minutes-frontend.onrender.com" target="_blank" style="color:#38bdf8;text-decoration:underline;">meeting-minutes-frontend.onrender.com</a>`;
     }
 
     if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('hire') || q.includes('linkedin')) {
