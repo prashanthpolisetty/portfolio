@@ -1,0 +1,816 @@
+/* ==========================================================================
+   upgrade.css — override layer for style.css
+   Load AFTER style.css:  <link rel="stylesheet" href="upgrade.css">
+
+   What this does (based on a read of the live style.css / app.js):
+   1. Palette: one primary (indigo) + green reserved for "live / available /
+      approved". Cyan stays for code/terminal only. Purple + yellow retired
+      from decoration.
+   2. Performance: removes backdrop-filter from ~25 static cards and the two
+      permanently animating 120px-blur orbs.
+   3. Motion: ONE orchestrated hero entrance; motion elsewhere only answers a
+      user action (filter, chat drawer, terminal output, focus, press).
+   4. Hover discipline: only clickable things react on hover.
+   5. Accessibility: prefers-reduced-motion, visible focus, undefined
+      utility classes defined, anchor offset under the fixed navbar.
+
+   Not visually tested — review in a browser at 390 / 768 / 1440 px.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+
+  --bg-dark: #0a0d13;
+  --bg-card: #11151d;                       /* solid: no blur needed */
+  --bg-card-hover: #161b26;
+  --bg-glass: rgba(10, 13, 19, 0.82);       /* navbar only */
+  --border-glass: #232a38;
+  --border-glass-hover: rgba(129, 140, 248, 0.45);
+
+  --primary: #5558e8;                       /* FILLS: white text = 5.3:1 */
+  --primary-glow: rgba(85, 88, 232, 0.28);
+  --primary-text: #a5b4fc;                  /* indigo as TEXT/icons: 9.2:1 */
+  --secondary: #22d3ee;                     /* code / terminal only */
+  --secondary-glow: rgba(34, 211, 238, 0.25);
+  --accent-green: #4ade80;                  /* live / available / approved */
+  --accent-yellow: #fbbf24;                 /* scores & metrics only */
+  --accent-purple: var(--primary-text);     /* retired: folds into primary */
+
+  --text-light: #e8ecf3;
+  --text-muted: #a3adbf;
+  --text-dim: #7f8ca3;                      /* was #64748b = 4.1:1, now 5.4:1 */
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* was `all 0.25s` — list properties instead of animating everything */
+  --transition:
+    color 0.2s var(--ease-out),
+    background-color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out),
+    opacity 0.2s var(--ease-out);
+  --shadow-card: none;
+}
+
+html { scroll-padding-top: 76px; }          /* fixed navbar is 70px tall */
+
+/* Fluid type (replaces the fixed sizes + 2 media queries) */
+.hero-title {
+  font-size: clamp(2.25rem, 1.2rem + 4.2vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.section-title { font-size: clamp(1.75rem, 1.1rem + 2.2vw, 2.4rem); }
+
+/* Tighter radii read more "engineered" than 16px everywhere */
+.glass-card { border-radius: 12px; }
+.btn { border-radius: 8px; }
+
+
+/* --------------------------------------------------------------------------
+   2. PERFORMANCE & AMBIENT ANIMATION SYSTEM
+   -------------------------------------------------------------------------- */
+.glass-card {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.bg-neural-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.78;
+}
+
+.glow-orb {
+  display: block !important;
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(105px);
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform;
+}
+
+.glow-1 {
+  width: 580px;
+  height: 580px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, rgba(99, 102, 241, 0) 70%);
+  top: -100px;
+  left: 10%;
+  animation: floatOrb1 18s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+  width: 540px;
+  height: 540px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.18) 0%, rgba(6, 182, 212, 0) 70%);
+  bottom: 12%;
+  right: 8%;
+  animation: floatOrb2 19s ease-in-out infinite alternate-reverse;
+}
+
+.glow-3 {
+  width: 460px;
+  height: 460px;
+  background: radial-gradient(circle, rgba(129, 140, 248, 0.13) 0%, rgba(129, 140, 248, 0) 70%);
+  top: 48%;
+  left: 45%;
+  animation: floatOrb3 20s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb1 {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(24px, 30px); }
+  100% { transform: translate(-16px, 38px); }
+}
+
+@keyframes floatOrb2 {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(-28px, -22px); }
+  100% { transform: translate(18px, -36px); }
+}
+
+@keyframes floatOrb3 {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(-20px, 24px); }
+  100% { transform: translate(26px, -18px); }
+}
+
+.background-effects {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  background: #070d17;
+}
+
+body {
+  isolation: isolate;
+}
+
+.background-effects::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 51% 47%, rgba(14, 87, 116, 0.3), transparent 52%),
+    radial-gradient(ellipse at 18% 22%, rgba(37, 70, 128, 0.18), transparent 43%),
+    radial-gradient(ellipse at 78% 35%, rgba(16, 110, 142, 0.16), transparent 40%),
+    radial-gradient(ellipse at 55% 82%, rgba(53, 65, 130, 0.14), transparent 43%);
+  background-size: 100% 100%;
+  animation: ambientDrift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes ambientDrift {
+  from { transform: translate3d(-1.25%, -0.5%, 0); }
+  to { transform: translate3d(1.25%, 0.5%, 0); }
+}
+
+.hero-section {
+  isolation: isolate;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(34, 211, 238, 0.065), transparent 56%),
+    radial-gradient(ellipse at 18% 72%, rgba(129, 140, 248, 0.07), transparent 48%);
+}
+
+#hero > .hero-container {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. COLOUR DISCIPLINE — indigo as TEXT uses --primary-text
+   -------------------------------------------------------------------------- */
+.code-bracket,
+.section-subtitle,
+.tier-label,
+.cmd-pill,
+.contact-icon,
+.text-indigo,
+.ai-avatar,
+.project-links a:hover,
+.footer-links a:hover { color: var(--primary-text); }
+
+.brand-icon {
+  width: 26px;
+  height: 26px;
+  margin-right: 8px;
+  border-radius: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.cmd-pill:hover { color: #fff; }
+
+/* About: four rainbow icon tiles -> one accent (inline styles removed in index.html) */
+.about-card .card-icon {
+  background: rgba(129, 140, 248, 0.12);
+  color: var(--primary-text);
+}
+.about-card:nth-child(n)::before {
+  background: linear-gradient(90deg, transparent, var(--primary-text), transparent);
+}
+.about-card .card-icon { transform: none; }
+
+/* Skills: category icons were indigo / cyan / purple / yellow */
+.skill-category .category-header i { color: var(--primary-text); }
+/* Project cards: check icons were indigo / cyan / yellow depending on the card */
+.project-highlights i { color: var(--primary-text); }
+
+/* Hero: one pill (LeetCode) was louder than GitHub/LinkedIn */
+.highlight-pill {
+  border-color: var(--border-glass);
+  background: var(--bg-card);
+  color: var(--text-muted);
+}
+/* Live demo = green (matches the "live" badges on the project cards) */
+.btn-glass .text-yellow { color: var(--accent-green); }
+
+/* Buttons: flat fill, no glow */
+.btn-primary { background: var(--primary); box-shadow: none; }
+.btn-primary:hover { background: #6366f1; transform: translateY(-1px); box-shadow: none; }
+.btn:active { transform: translateY(0) scale(0.98); }
+
+/* Undefined in style.css but used by app.js / index.html */
+.text-green { color: var(--accent-green); }
+.text-red-400 { color: #f87171; }
+
+
+/* --------------------------------------------------------------------------
+   4. HERO — the single orchestrated entrance (CSS only, no JS needed)
+   -------------------------------------------------------------------------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-container > * { animation: rise 0.58s var(--ease-out) both; }
+.hero-container > :nth-child(1) { animation-delay: 0.05s; }  /* status badge */
+.hero-container > :nth-child(2) { animation-delay: 0.14s; }  /* name        */
+.hero-container > :nth-child(3) { animation-delay: 0.23s; }  /* typed line  */
+.hero-container > :nth-child(4) { animation-delay: 0.32s; }  /* description */
+.hero-container > :nth-child(5) { animation-delay: 0.41s; }  /* CTAs        */
+.hero-container > :nth-child(6) { animation-delay: 0.50s; }  /* link pills  */
+
+/* Typed line: stop the centred text from jittering left/right per character.
+   JetBrains Mono is monospaced, so `ch` is exact. Longest role = 35 chars. */
+.hero-subtitle { color: var(--text-muted); }
+.hero-subtitle .typing-text {
+  display: inline-block;
+  min-width: 35ch;
+  text-align: left;
+  color: var(--secondary);
+}
+.hero-subtitle .typing-text::after {          /* cursor rides the text */
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.16em;
+  background: var(--primary-text);
+  animation: blink 1s step-start infinite;
+}
+.cursor-blink { display: none; }              /* old detached cursor */
+
+@media (max-width: 768px) {
+  .hero-subtitle { display: flex; flex-direction: column; align-items: center; }
+  .hero-subtitle .typing-text { font-size: clamp(0.75rem, 3.7vw, 1.2rem); }
+}
+
+
+/* --------------------------------------------------------------------------
+   5. HOVER DISCIPLINE — only clickable things react
+   -------------------------------------------------------------------------- */
+.glass-card:hover { border-color: var(--border-glass); box-shadow: var(--shadow-card); }
+.about-card:hover { transform: none; border-color: var(--border-glass); box-shadow: none; }
+.about-card:hover .card-icon { transform: none; }
+.tag:hover {                                  /* tags aren't links */
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border-glass);
+  color: var(--text-light);
+  transform: none;
+}
+.project-card:hover,
+.contact-card:hover { border-color: var(--border-glass-hover); }
+
+/* Project cards: cursor spotlight (fine pointers only; JS sets --mx/--my) */
+@media (hover: hover) and (pointer: fine) {
+  .project-card { position: relative; isolation: isolate; }
+  .project-card::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 220ms var(--ease-out);
+    background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%),
+                rgba(34, 211, 238, 0.085), rgba(129, 140, 248, 0.035) 38%, transparent 70%);
+  }
+  .project-card:hover::after { opacity: 1; }
+  .project-card > * { position: relative; z-index: 1; }
+}
+
+
+/* --------------------------------------------------------------------------
+   6. NAVBAR — transparent at top, solid once scrolled (JS toggles .is-scrolled)
+   -------------------------------------------------------------------------- */
+.navbar-wrapper {
+  background: transparent;
+  border-bottom-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition: background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+.navbar-wrapper.is-scrolled {
+  background: var(--bg-glass);
+  border-bottom-color: var(--border-glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+
+/* --------------------------------------------------------------------------
+   7. MOTION THAT ANSWERS AN ACTION
+   -------------------------------------------------------------------------- */
+/* Project filter — View Transitions (progressive; instant where unsupported) */
+::view-transition-group(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+/* Chat drawer: now animates closed as well as open (was display:none) */
+.ai-widget-drawer {
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  transform-origin: bottom right;
+  pointer-events: none;
+  animation: none;
+  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out),
+              visibility 0s linear 0.2s;
+}
+.ai-widget-drawer.open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.ai-pulse { animation-iteration-count: 3; }   /* was infinite */
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.chat-bubble { animation: bubbleIn 0.25s var(--ease-out) both; }
+
+/* Terminal output */
+@keyframes lineIn { from { opacity: 0; } to { opacity: 1; } }
+.terminal-line { animation: lineIn 0.18s ease-out both; }
+
+
+/* --------------------------------------------------------------------------
+   8. FOCUS — inputs had `outline: none` with nothing in its place
+   -------------------------------------------------------------------------- */
+:focus-visible { outline: 2px solid var(--primary-text); outline-offset: 2px; }
+.terminal-input:focus-visible,
+.ai-input-form input:focus-visible { outline: none; }
+.terminal-input-row:focus-within { box-shadow: inset 0 0 0 1px var(--secondary); }
+.ai-input-form:focus-within { box-shadow: inset 0 0 0 1px var(--primary-text); }
+
+
+/* --------------------------------------------------------------------------
+   9. REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   10. DE-TEMPLATE — remove the eyebrow label + gradient underline above every
+   heading (your h2s already say what each section is) and left-align section
+   headers to the content grid.
+   To bring them back, delete this block.
+   -------------------------------------------------------------------------- */
+.section-subtitle,
+.section-line { display: none; }
+.section-header { text-align: left; margin-left: 0; max-width: 46rem; }
+.project-filters { justify-content: flex-start; }
+.gradient-text {                              /* legacy class, now unused */
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: inherit;
+}
+
+
+/* --------------------------------------------------------------------------
+   11. NEW ELEMENTS in index.html
+   -------------------------------------------------------------------------- */
+/* Hero: role now lives in the h1 */
+.hero-role {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: clamp(1.05rem, 0.85rem + 1vw, 1.55rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
+/* Hero: icon-only profile links (each has an aria-label) */
+.hero-stats-bar .stat-pill {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+/* About: the one idea worth remembering. Colours follow the palette rule:
+   indigo = the AI reasons, green = the backend approves. */
+.principle {
+  max-width: 52rem;
+  margin: 0 0 2.75rem;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--primary-text);
+  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+.principle span { display: block; }
+.principle-propose { color: var(--primary-text); }
+.principle-authorize { color: var(--accent-green); }
+
+.inline-link { color: var(--primary-text); font-weight: 600; text-decoration: none; }
+.inline-link:hover { text-decoration: underline; }
+
+/* Let long contact details wrap instead of widening mobile cards. */
+.contact-value { overflow-wrap: anywhere; }
+
+/* Contact form status (real result, not a fake success) */
+.form-status.ok   { color: var(--accent-green); }
+.form-status.err  { color: #f87171; }
+.form-status.info { color: var(--text-muted); }
+
+/* Keyboard: skip link */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 3000;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s var(--ease-out);
+}
+.skip-link:focus { top: 1rem; }
+
+
+/* --------------------------------------------------------------------------
+   12. COORDINATED MOTION — progressive, low-distance, and once per element
+   -------------------------------------------------------------------------- */
+:root {
+  --motion-fast: 180ms;
+  --motion-card: 240ms;
+  --motion-enter: 500ms;
+  --motion-ease: cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.motion-ready .motion-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--motion-enter) var(--motion-ease) var(--motion-stagger, 0ms),
+    transform var(--motion-enter) var(--motion-ease) var(--motion-stagger, 0ms);
+  will-change: opacity, transform;
+}
+
+.motion-ready .motion-reveal.motion-visible {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+.background-effects .glow-orb {
+  will-change: transform;
+}
+
+.page-hidden .background-effects .glow-orb {
+  animation-play-state: paused;
+}
+
+.page-hidden .background-effects::before {
+  animation-play-state: paused;
+}
+
+.about-card,
+.skill-category,
+.project-card,
+.timeline-content,
+.cert-item,
+.contact-card,
+.terminal-window,
+.research-card,
+.contact-form-container {
+  transition:
+    transform var(--motion-card) var(--motion-ease),
+    border-color var(--motion-card) var(--motion-ease),
+    box-shadow var(--motion-card) var(--motion-ease),
+    background-color var(--motion-card) var(--motion-ease);
+}
+
+.project-card:hover,
+.about-card:hover,
+.skill-category:hover,
+.timeline-content:hover,
+.cert-item:hover,
+.research-card:hover,
+.contact-form-container:hover,
+.contact-card:hover,
+.project-card:focus-within,
+.about-card:focus-within,
+.skill-category:focus-within,
+.timeline-content:focus-within,
+.cert-item:focus-within,
+.research-card:focus-within,
+.contact-form-container:focus-within,
+.contact-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--border-glass-hover);
+  box-shadow: 0 12px 30px -18px var(--primary-glow);
+}
+
+.motion-ready .motion-reveal.motion-visible.project-card:hover,
+.motion-ready .motion-reveal.motion-visible.about-card:hover,
+.motion-ready .motion-reveal.motion-visible.skill-category:hover,
+.motion-ready .motion-reveal.motion-visible.timeline-content:hover,
+.motion-ready .motion-reveal.motion-visible.cert-item:hover,
+.motion-ready .motion-reveal.motion-visible.research-card:hover,
+.motion-ready .motion-reveal.motion-visible.contact-form-container:hover,
+.motion-ready .motion-reveal.motion-visible.contact-card:hover,
+.motion-ready .motion-reveal.motion-visible.project-card:focus-within,
+.motion-ready .motion-reveal.motion-visible.about-card:focus-within,
+.motion-ready .motion-reveal.motion-visible.skill-category:focus-within,
+.motion-ready .motion-reveal.motion-visible.timeline-content:focus-within,
+.motion-ready .motion-reveal.motion-visible.cert-item:focus-within,
+.motion-ready .motion-reveal.motion-visible.research-card:focus-within,
+.motion-ready .motion-reveal.motion-visible.contact-form-container:focus-within,
+.motion-ready .motion-reveal.motion-visible.contact-card:focus-visible {
+  transform: translateY(-4px);
+  transition-delay: 0s;
+}
+
+.about-card .card-icon,
+.category-header i,
+.project-links a i,
+.contact-icon,
+.btn i {
+  transition: transform var(--motion-fast) var(--motion-ease), color var(--motion-fast) var(--motion-ease);
+}
+
+.about-card:hover .card-icon,
+.about-card:focus-within .card-icon,
+.skill-category:hover .category-header i,
+.skill-category:focus-within .category-header i,
+.contact-card:hover .contact-icon,
+.contact-card:focus-visible .contact-icon {
+  transform: translateY(-2px);
+}
+
+.project-links a:hover i,
+.project-links a:focus-visible i {
+  transform: translateY(-2px);
+}
+
+.tag {
+  transition:
+    transform var(--motion-fast) var(--motion-ease),
+    color var(--motion-fast) var(--motion-ease),
+    border-color var(--motion-fast) var(--motion-ease),
+    background-color var(--motion-fast) var(--motion-ease);
+}
+
+.tag:hover {
+  transform: translateY(-1px);
+}
+
+.timeline-container::before {
+  transform: scaleY(var(--timeline-progress, 1));
+  transform-origin: top;
+  transition: transform 120ms linear;
+}
+
+.timeline-dot {
+  opacity: 0.55;
+  transform: scale(0.82);
+  transition: opacity var(--motion-card) var(--motion-ease), transform var(--motion-card) var(--motion-ease);
+}
+
+.timeline-item.motion-visible .timeline-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.btn,
+.filter-btn,
+.project-links a,
+.nav-item,
+.mobile-nav-link,
+.menu-toggle,
+.ai-widget-trigger,
+.ai-close-btn,
+.quick-pill {
+  transition:
+    color var(--motion-fast) var(--motion-ease),
+    background-color var(--motion-fast) var(--motion-ease),
+    border-color var(--motion-fast) var(--motion-ease),
+    box-shadow var(--motion-fast) var(--motion-ease),
+    transform var(--motion-fast) var(--motion-ease),
+    opacity var(--motion-fast) var(--motion-ease);
+}
+
+.btn:hover,
+.btn:focus-visible,
+.filter-btn:hover,
+.filter-btn:focus-visible,
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
+  transform: translateY(-2px);
+}
+
+.btn:active,
+.filter-btn:active,
+.menu-toggle:active,
+.ai-widget-trigger:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn:hover i,
+.btn:focus-visible i {
+  transform: translateX(2px);
+}
+
+.ai-widget-trigger:hover,
+.ai-widget-trigger:focus-visible {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.mobile-menu {
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  transition:
+    opacity var(--motion-card) var(--motion-ease),
+    transform var(--motion-card) var(--motion-ease),
+    visibility 0s linear var(--motion-card),
+    display var(--motion-card) allow-discrete;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+@starting-style {
+  .mobile-menu.open {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.terminal-input {
+  caret-color: var(--secondary);
+}
+
+.terminal-line {
+  animation: lineIn 220ms var(--motion-ease) both;
+}
+
+.form-status.ok,
+.form-status.err {
+  animation: statusIn 240ms var(--motion-ease) both;
+}
+
+@keyframes statusIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready .motion-reveal,
+  .motion-ready .motion-reveal.motion-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .background-effects .glow-orb {
+    animation: none;
+    will-change: auto;
+  }
+
+  .background-effects::before {
+    animation: none;
+    will-change: auto;
+  }
+
+  .timeline-container::before {
+    transform: none;
+    transition: none;
+  }
+
+  .timeline-dot {
+    opacity: 1;
+    transform: none;
+  }
+
+  .project-card:hover,
+  .about-card:hover,
+  .skill-category:hover,
+  .timeline-content:hover,
+  .cert-item:hover,
+  .research-card:hover,
+  .contact-form-container:hover,
+  .contact-card:hover,
+  .project-card:focus-within,
+  .about-card:focus-within,
+  .skill-category:focus-within,
+  .timeline-content:focus-within,
+  .cert-item:focus-within,
+  .research-card:focus-within,
+  .contact-form-container:focus-within,
+  .contact-card:focus-visible,
+  .btn:hover,
+  .btn:focus-visible,
+  .filter-btn:hover,
+  .filter-btn:focus-visible,
+  .menu-toggle:hover,
+  .menu-toggle:focus-visible,
+  .ai-widget-trigger:hover,
+  .ai-widget-trigger:focus-visible,
+  .project-links a:hover,
+  .project-links a:focus-visible,
+  .tag:hover,
+  .tag:focus-visible {
+    transform: none;
+  }
+
+  .motion-ready .motion-reveal.motion-visible.project-card:hover,
+  .motion-ready .motion-reveal.motion-visible.about-card:hover,
+  .motion-ready .motion-reveal.motion-visible.skill-category:hover,
+  .motion-ready .motion-reveal.motion-visible.timeline-content:hover,
+  .motion-ready .motion-reveal.motion-visible.cert-item:hover,
+  .motion-ready .motion-reveal.motion-visible.research-card:hover,
+  .motion-ready .motion-reveal.motion-visible.contact-form-container:hover,
+  .motion-ready .motion-reveal.motion-visible.contact-card:hover,
+  .motion-ready .motion-reveal.motion-visible.project-card:focus-within,
+  .motion-ready .motion-reveal.motion-visible.about-card:focus-within,
+  .motion-ready .motion-reveal.motion-visible.skill-category:focus-within,
+  .motion-ready .motion-reveal.motion-visible.timeline-content:focus-within,
+  .motion-ready .motion-reveal.motion-visible.cert-item:focus-within,
+  .motion-ready .motion-reveal.motion-visible.research-card:focus-within,
+  .motion-ready .motion-reveal.motion-visible.contact-form-container:focus-within,
+  .motion-ready .motion-reveal.motion-visible.contact-card:focus-visible {
+    transform: none;
+  }
+}

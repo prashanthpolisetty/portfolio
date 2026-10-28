@@ -1,13 +1,18 @@
 /**
  * Polisetty Prashanth - Portfolio Interactive Scripts
  * Handles:
- * 1. Typing animation in hero section
+ * 1. Typing animation in hero section        (overridden by motion.js)
  * 2. Mobile navbar toggle and smooth scrolling
- * 3. Dynamic project category filtering
+ * 3. Dynamic project category filtering        (overridden by motion.js)
  * 4. Interactive Developer Terminal CLI emulator
- * 5. Recruiter AI Assistant conversational drawer
- * 6. Resume PDF modal preview & download triggers
- * 7. Simulated contact form submission
+ * 5. Predefined portfolio assistant
+ * 6. Contact form
+ *
+ * Changes in this version:
+ *  - Assistant: word-boundary matching (the old `includes('ai')` matched
+ *    "email" and "available", so those questions got the GenAI answer).
+ *  - Contact form no longer fakes a success message (see CONTACT_ENDPOINT).
+ *  - Status messages use textContent instead of innerHTML.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,12 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectFilters();
   initTerminal();
   initAiAssistant();
-  initResumeModal();
   initContactForm();
 });
 
 /* ==========================================================================
-   1. Dynamic Typing Effect
+   1. Dynamic Typing Effect (motion.js replaces this with a jitter-free version)
    ========================================================================== */
 function initTypingEffect() {
   const typingElement = document.getElementById('typingText');
@@ -76,31 +80,26 @@ function initMobileMenu() {
   const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
   if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
+    const setOpen = (open) => {
+      mobileMenu.classList.toggle('open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
       const icon = menuToggle.querySelector('i');
-      if (mobileMenu.classList.contains('open')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-xmark');
-      } else {
-        icon.classList.remove('fa-xmark');
-        icon.classList.add('fa-bars');
-      }
+      icon.classList.toggle('fa-xmark', open);
+      icon.classList.toggle('fa-bars', !open);
+    };
+
+    menuToggle.addEventListener('click', () => {
+      setOpen(!mobileMenu.classList.contains('open'));
     });
 
     mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        const icon = menuToggle.querySelector('i');
-        icon.classList.remove('fa-xmark');
-        icon.classList.add('fa-bars');
-      });
+      link.addEventListener('click', () => setOpen(false));
     });
   }
 }
 
 /* ==========================================================================
-   3. Project Category Filtering
+   3. Project Category Filtering (motion.js replaces this with an animated one)
    ========================================================================== */
 function initProjectFilters() {
   const filterBtns = document.querySelectorAll('.filter-btn');
@@ -147,16 +146,15 @@ Available commands:
   <span class="text-cyan">ragbot</span>      : Information on Document RAG Chatbot
   <span class="text-cyan">meeting</span>     : Information on Meeting Minutes Generator
   <span class="text-cyan">education</span>   : View B.Tech & CITD degree details
-  <span class="text-cyan">experience</span>  : View ML internship & industrial training
+  <span class="text-cyan">experience</span>  : View AI/ML internships & industrial training
   <span class="text-cyan">contact</span>     : Get email, phone, GitHub, & LinkedIn
-  <span class="text-cyan">resume</span>      : Open & trigger resume download
   <span class="text-cyan">clear</span>       : Clear the terminal screen
 `,
     about: `
 <span class="text-indigo">Polisetty Prashanth</span>
-Final-year Computer Science Engineering (AI & ML) student at NGIT Hyderabad.
+Computer Science Engineering (AI & ML) student at NGIT Hyderabad.
 Passionate about taking autonomous Generative AI and agentic systems into production.
-View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" target="_blank" class="text-cyan">leetcode.com/u/polisetty_prashanth</a>
+View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" target="_blank" rel="noopener noreferrer" class="text-cyan">leetcode.com/u/polisetty_prashanth</a>
 `,
     skills: `
 <span class="text-indigo">Generative AI & LLMs:</span> LangChain, CrewAI, Llama 3.1, Gemini API, Sentence Transformers, RAG
@@ -166,9 +164,9 @@ View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" tar
 `,
     projects: `
 1. <span class="text-indigo font-bold">PayPilot-AI</span>: Agentic commerce platform for Razorpay Buildathon (Track 01)
-2. <span class="text-cyan font-bold">Document RAG Chatbot</span>: Live interactive PDF/text RAG bot (<a href="https://ragbotq.streamlit.app" target="_blank" class="text-indigo">ragbotq.streamlit.app</a>)
+2. <span class="text-cyan font-bold">Document RAG Chatbot</span>: Live interactive PDF/text RAG bot (<a href="https://ragbotq.streamlit.app" target="_blank" rel="noopener noreferrer" class="text-indigo">ragbotq.streamlit.app</a>)
 3. <span class="text-purple font-bold">AI Resume Analyzer</span>: High-throughput candidate screener using Gemini & Pydantic
-4. <span class="text-yellow font-bold">Meeting Minutes Generator</span>: Live deployed app (<a href="https://meeting-minutes-frontend.onrender.com" target="_blank" class="text-indigo">meeting-minutes-frontend.onrender.com</a>)
+4. <span class="text-yellow font-bold">Meeting Minutes Generator</span>: Live deployed app (<a href="https://meeting-minutes-frontend.onrender.com" target="_blank" rel="noopener noreferrer" class="text-indigo">meeting-minutes-frontend.onrender.com</a>)
 5. <span class="text-muted font-bold">Binance Trading Bot</span>: Sub-minute algorithmic cryptocurrency execution bot
 `,
     paypilot: `
@@ -177,21 +175,21 @@ View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" tar
 • Conversational product discovery & semantic RAG vector catalog search
 • Strict deterministic financial caps (₹1,00,000 ceiling)
 • Server-side HMAC-SHA256 signature verification & idempotent webhooks
-Repo: <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank" class="text-cyan">github.com/prashanthpolisetty/PayPilot-AI</a>
+Repo: <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank" rel="noopener noreferrer" class="text-cyan">github.com/prashanthpolisetty/PayPilot-AI</a>
 `,
     ragbot: `
 <span class="text-cyan font-bold">Document RAG Chatbot</span>
 • Evaluation accuracy >80% with all-MiniLM-L6-v2 embeddings
 • Persistent ChromaDB vector storage + Llama 3.1 inference
-• Live Streamlit app: <a href="https://ragbotq.streamlit.app" target="_blank" class="text-indigo">ragbotq.streamlit.app</a>
+• Live Streamlit app: <a href="https://ragbotq.streamlit.app" target="_blank" rel="noopener noreferrer" class="text-indigo">ragbotq.streamlit.app</a>
 `,
     meeting: `
 <span class="text-yellow font-bold">Meeting Minutes Generator</span>
 • Autonomous AI meeting assistant with local Whisper transcription
 • Structured synthesis of summaries, key decisions & action items via Groq & Gemini
 • Automated participant email dispatch workflow
-• Live Deployed App: <a href="https://meeting-minutes-frontend.onrender.com" target="_blank" class="text-indigo">meeting-minutes-frontend.onrender.com</a>
-Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" target="_blank" class="text-cyan">github.com/prashanthpolisetty/Meeting-minutes-Generator</a>
+• Live Deployed App: <a href="https://meeting-minutes-frontend.onrender.com" target="_blank" rel="noopener noreferrer" class="text-indigo">meeting-minutes-frontend.onrender.com</a>
+Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" target="_blank" rel="noopener noreferrer" class="text-cyan">github.com/prashanthpolisetty/Meeting-minutes-Generator</a>
 `,
     education: `
 • <span class="text-indigo font-bold">B.Tech in CSE (AI & ML)</span>: Neil Gogte Institute of Technology (2024–2027) | CGPA: 8.06
@@ -199,6 +197,8 @@ Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" 
 • <span class="text-yellow font-bold">10th Grade (Secondary)</span>: Navodaya High School, Gadwal (2020) | CGPA: 9.8
 `,
     experience: `
+• <span class="text-indigo font-bold">AI/ML Intern</span> @ VRITTIFY AI (Jul 2026 – Oct 2026):
+  Contributed to product development, research, and operations support.
 • <span class="text-indigo font-bold">Machine Learning Intern</span> @ Unified Mentor (May 2025 – Jun 2025):
   Predictive regression models (House & Mobile pricing) and comprehensive EDA.
 • <span class="text-cyan font-bold">Industrial Engineering Trainee</span> @ Tata Advanced Systems Limited (2023):
@@ -207,12 +207,9 @@ Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" 
     contact: `
 • Email   : <a href="mailto:polisheetyprashanth246@gmail.com" class="text-cyan">polisheetyprashanth246@gmail.com</a>
 • Phone   : <a href="tel:+919121990362" class="text-cyan">+91-9121990362</a>
-• GitHub  : <a href="https://github.com/prashanthpolisetty" target="_blank" class="text-cyan">github.com/prashanthpolisetty</a>
-• LinkedIn: <a href="https://linkedin.com/in/polisetty-prashanth-5440b5298" target="_blank" class="text-cyan">polisetty-prashanth-5440b5298</a>
+• GitHub  : <a href="https://github.com/prashanthpolisetty" target="_blank" rel="noopener noreferrer" class="text-cyan">github.com/prashanthpolisetty</a>
+• LinkedIn: <a href="https://linkedin.com/in/polisetty-prashanth-5440b5298" target="_blank" rel="noopener noreferrer" class="text-cyan">polisetty-prashanth-5440b5298</a>
 `,
-    resume: `
-<span class="text-green font-bold">Opening resume modal & initiating download...</span>
-`
   };
 
   terminalInput.addEventListener('keydown', (e) => {
@@ -223,23 +220,17 @@ Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" 
 
       if (!cmd) return;
 
-      appendTerminalLine(`<span class="prompt-symbol">visitor@prashanth:~$</span> ${rawCmd}`);
+      appendTerminalLine(`<span class="prompt-symbol">visitor@prashanth:~$</span> ${escapeHtml(rawCmd)}`);
 
       if (cmd === 'clear') {
         terminalOutput.innerHTML = '';
         return;
       }
 
-      if (cmd === 'resume') {
-        appendTerminalLine(commandResponses.resume);
-        openResumeModal();
-        return;
-      }
-
-      if (commandResponses[cmd]) {
+      if (Object.prototype.hasOwnProperty.call(commandResponses, cmd)) {
         appendTerminalLine(commandResponses[cmd]);
       } else {
-        appendTerminalLine(`<span class="text-red-400">bash: command not found: ${rawCmd}. Type <span class="text-cyan font-bold">help</span> for a list of commands.</span>`);
+        appendTerminalLine(`<span class="text-red-400">bash: command not found: ${escapeHtml(rawCmd)}. Type <span class="text-cyan font-bold">help</span> for a list of commands.</span>`);
       }
 
       terminalOutput.scrollTop = terminalOutput.scrollHeight;
@@ -270,8 +261,15 @@ Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" 
   }
 }
 
+// Visitor-typed text must never be inserted as HTML.
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 /* ==========================================================================
-   5. Floating Recruiter AI Assistant Widget
+   5. Predefined Portfolio Assistant
    ========================================================================== */
 function initAiAssistant() {
   const aiTrigger = document.getElementById('aiTrigger');
@@ -281,22 +279,42 @@ function initAiAssistant() {
   const aiChatInput = document.getElementById('aiChatInput');
   const aiMessages = document.getElementById('aiMessages');
   const quickPills = document.querySelectorAll('.quick-pill');
+  const submitButton = aiChatForm ? aiChatForm.querySelector('button[type="submit"]') : null;
 
-  if (!aiTrigger || !aiDrawer) return;
+  if (!aiTrigger || !aiDrawer || !aiClose || !aiChatForm || !aiChatInput || !aiMessages || !submitButton) return;
 
+  function setDrawerOpen(open) {
+    aiDrawer.classList.toggle('open', open);
+    aiDrawer.setAttribute('aria-hidden', String(!open));
+    aiDrawer.inert = !open;
+    aiTrigger.setAttribute('aria-expanded', String(open));
+    if (open && aiChatInput) {
+      setTimeout(() => aiChatInput.focus(), 50);
+    }
+  }
+
+  aiTrigger.setAttribute('aria-expanded', 'false');
   aiTrigger.addEventListener('click', () => {
-    aiDrawer.classList.toggle('open');
+    setDrawerOpen(!aiDrawer.classList.contains('open'));
   });
 
   aiClose.addEventListener('click', () => {
-    aiDrawer.classList.remove('open');
+    setDrawerOpen(false);
+    aiTrigger.focus();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && aiDrawer.classList.contains('open')) {
+      setDrawerOpen(false);
+      aiTrigger.focus();
+    }
   });
 
   // Quick action pills
   quickPills.forEach(pill => {
     pill.addEventListener('click', () => {
       const query = pill.getAttribute('data-q');
-      handleAiQuery(query);
+      if (query) handleAiQuery(query);
     });
   });
 
@@ -309,142 +327,164 @@ function initAiAssistant() {
   });
 
   function handleAiQuery(userText) {
-    // Add User Message
     addMessage(userText, 'user');
+    addMessage(getPredefinedAnswer(userText), 'ai');
+    aiChatInput.focus();
+  }
 
-    // Generate intelligent contextual response
-    setTimeout(() => {
-      const response = generateAiAnswer(userText);
-      addMessage(response, 'ai');
-    }, 450);
+  function getPredefinedAnswer(question) {
+    const query = question.toLowerCase().replace(/[^a-z0-9+#.]+/g, ' ').trim();
+    const matches = (...terms) => terms.some((term) => query.includes(term));
+
+    if (matches('contact', 'email', 'reach', 'linkedin', 'github', 'location', 'where is')) {
+      return 'You can contact Prashanth at polisheetyprashanth246@gmail.com, connect on LinkedIn at linkedin.com/in/polisetty-prashanth-5440b5298, or find his projects at github.com/prashanthpolisetty. He is based in Hyderabad, Telangana, India.';
+    }
+    if (matches('paypilot', 'pay pilot')) {
+      return 'PayPilot-AI is an agentic commerce platform built for the Razorpay Buildathon. Its 18-step pipeline uses semantic product search, contextual upsells, deterministic transaction caps, server-side Razorpay signature validation, and human approval before payment. It is built with FastAPI, React, PostgreSQL, Razorpay API, Docker, and Gemini/Groq. The source code is on GitHub: github.com/prashanthpolisetty/PayPilot-AI.';
+    }
+    if (matches('rag chatbot', 'document rag', 'rag bot', 'retrieval augmented')) {
+      return 'The Document RAG Chatbot lets users upload PDF or text documents and ask questions about their content. It uses LangChain, ChromaDB, Llama 3.1, and Streamlit; the portfolio lists over 80% evaluation accuracy and 35% reduced document overhead. Try it at ragbotq.streamlit.app or view github.com/prashanthpolisetty/RAG-bot.';
+    }
+    if (matches('resume analyzer', 'resume screener', 'resume project')) {
+      return 'The AI Resume Screener & Analyzer uses LangChain and Google Gemini to evaluate resumes. It extracts keyword gaps with Pydantic schemas and provides ATS scoring and grammar analysis. The portfolio reports 15x faster processing than manual screening. Source: github.com/prashanthpolisetty/AI-Resume-Analyzer.';
+    }
+    if (matches('meeting minutes', 'minutes generator', 'meeting assistant')) {
+      return 'The Meeting Minutes Generator transcribes recordings locally with OpenAI Whisper, then uses cloud language models to create summaries, decisions, and action items and email participants. Its stack includes TypeScript, Python, Whisper, Groq, and Gemini. Live app: meeting-minutes-frontend.onrender.com.';
+    }
+    if (matches('binance', 'trading bot', 'crypto bot')) {
+      return 'The Binance Trading Bot scans cryptocurrency markets, calculates indicators, identifies buy/sell signals, and dispatches trading triggers. The portfolio lists Python, the Binance API, and financial algorithms as its main technologies. Source: github.com/prashanthpolisetty/binance-trading-bot.';
+    }
+    if (matches('project', 'projects', 'built', 'portfolio work')) {
+      return 'Featured projects are PayPilot-AI (agentic commerce), the Document RAG Chatbot, an AI Resume Screener & Analyzer, a Meeting Minutes Generator, and a Binance Trading Bot. The RAG chatbot and Meeting Minutes Generator have live demos. Ask about any project by name for details.';
+    }
+    if (matches('intern', 'experience', 'work history', 'career', 'vr ittify', 'vrittify', 'unified mentor', 'tata advanced')) {
+      return 'Prashanth’s experience includes an AI/ML internship at VRITTIFY AI (July–October 2026), contributing to product development, research, and operations support; a Machine Learning internship at Unified Mentor (May–June 2025), where he built house-price and mobile-phone price regression pipelines and performed exploratory data analysis; and industrial engineering training at Tata Advanced Systems in 2023.';
+    }
+    if (matches('education', 'degree', 'college', 'university', 'study', 'school', 'cgpa', 'diploma')) {
+      return 'Prashanth is pursuing a B.Tech in Computer Science Engineering (AI & ML) at Neil Gogte Institute of Technology in Hyderabad (2024–2027; CGPA 8.06/10). He completed a Diploma in Tool & Die Making at CITD Hyderabad (2020–2024; 74.15%) and secondary school at Navodaya High School, Gadwal (CGPA 9.8/10, completed 2020).';
+    }
+    if (matches('genai', 'generative ai', 'llm', 'rag skill', 'langchain', 'crewai', 'gemini', 'llama', 'vector search', 'prompt engineering')) {
+      return 'Generative AI and LLM skills listed on the portfolio: LangChain, CrewAI, RAG architecture, Llama 3.1, Google Gemini API, Sentence Transformers, vector search, and prompt engineering (CoT/Few-Shot).';
+    }
+    if (matches('backend', 'database', 'fastapi', 'flask', 'chromadb', 'postgres', 'mysql', 'pydantic', 'razorpay api', 'rest api')) {
+      return 'Backend and database skills listed on the portfolio: FastAPI, Flask, ChromaDB, PostgreSQL, MySQL, Pydantic, RESTful APIs, and Razorpay API integration.';
+    }
+    if (matches('language', 'programming', 'python', 'java', 'javascript', 'typescript', 'sql', 'html', 'css', 'data structure', 'algorithm')) {
+      return 'Languages and core CS skills listed on the portfolio: Python, Java, JavaScript (ES6+), TypeScript, SQL, HTML5/CSS3, and data structures and algorithms.';
+    }
+    if (matches('tool', 'devops', 'docker', 'streamlit', 'scikit', 'sklearn', 'pandas', 'numpy', 'jupyter', 'vscode', 'vs code', 'github')) {
+      return 'Tools, data, and DevOps skills listed on the portfolio: Git/GitHub, Streamlit, Docker, Scikit-Learn, Pandas, NumPy, VS Code, Cursor, and Jupyter Notebooks.';
+    }
+    if (matches('skill', 'tech stack', 'technologies', 'technology', 'what can he')) {
+      return 'Prashanth’s skills span Generative AI and LLMs (LangChain, CrewAI, RAG, Gemini), backend and databases (FastAPI, Flask, PostgreSQL, ChromaDB), programming (Python, Java, JavaScript, TypeScript, SQL), and tools (Docker, Streamlit, Scikit-Learn, Pandas/NumPy). Ask about a category for the full list.';
+    }
+    if (matches('about', 'who is', 'who s', 'profile', 'background', 'introduce')) {
+      return 'Prashanth is a Computer Science (AI & ML) engineering student focused on Generative AI, RAG systems, agentic workflows, and Python backends. His portfolio highlights LLM integrations, reliable backend services, deploying AI applications, and data structures and algorithms. He studies at NGIT in Hyderabad.';
+    }
+    if (matches('live', 'demo', 'deployed', 'try it', 'open app')) {
+      return 'Live project demos listed on the portfolio:\n• Document RAG Chatbot: https://ragbotq.streamlit.app/\n• Meeting Minutes Generator: https://meeting-minutes-frontend.onrender.com/\nPayPilot-AI is listed with its GitHub source but no live demo link.';
+    }
+
+    return 'I can answer predefined questions about Prashanth’s projects, skills, experience, education, background, or contact details. Try asking about a project by name, or use one of the suggested questions.';
   }
 
   function addMessage(text, sender) {
     const bubble = document.createElement('div');
     bubble.className = `chat-bubble ${sender === 'user' ? 'user-bubble' : 'ai-bubble'}`;
-    bubble.innerHTML = text;
+    bubble.dataset.role = sender;
+    bubble.textContent = text;
     aiMessages.appendChild(bubble);
     aiMessages.scrollTop = aiMessages.scrollHeight;
-  }
-
-  function generateAiAnswer(input) {
-    const q = input.toLowerCase();
-
-    if (q.includes('paypilot') || q.includes('razorpay')) {
-      return `⚡ <strong>PayPilot-AI</strong> is Prashanth's flagship autonomous agentic commerce platform built for the Razorpay Buildathon. It features an 18-step pipeline where an AI buyer agent handles natural language catalog exploration & RAG vector rankings, while deterministic FastAPI microservices enforce transaction caps (₹1,00,000) and human-gated Razorpay payments!`;
-    }
-
-    if (q.includes('rag') || q.includes('genai') || q.includes('llm') || q.includes('ai') || q.includes('langchain')) {
-      return `🤖 Prashanth specializes in <strong>Retrieval-Augmented Generation (RAG)</strong> and autonomous agents. He uses LangChain, CrewAI, ChromaDB vector stores, HuggingFace Sentence Transformers, and Google Gemini / Llama 3.1 with strict Pydantic JSON schemas and Chain-of-Thought prompting.`;
-    }
-
-    if (q.includes('meeting') || q.includes('minutes') || q.includes('whisper') || q.includes('transcri')) {
-      return `📝 The <strong>Meeting Minutes Generator</strong> is an autonomous AI meeting assistant that transcribes audio with Whisper, extracts summaries & action items via Groq/Gemini, and emails participants. It's live and deployed at <a href="https://meeting-minutes-frontend.onrender.com" target="_blank" style="color:#38bdf8;text-decoration:underline;">meeting-minutes-frontend.onrender.com</a>!`;
-    }
-
-    if (q.includes('live') || q.includes('demo') || q.includes('stream')) {
-      return `🌐 Prashanth has multiple live apps deployed!<br/>• <strong>Document RAG Chatbot</strong>: <a href="https://ragbotq.streamlit.app" target="_blank" style="color:#38bdf8;text-decoration:underline;">ragbotq.streamlit.app</a><br/>• <strong>Meeting Minutes Generator</strong>: <a href="https://meeting-minutes-frontend.onrender.com" target="_blank" style="color:#38bdf8;text-decoration:underline;">meeting-minutes-frontend.onrender.com</a>`;
-    }
-
-    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('hire') || q.includes('linkedin')) {
-      return `📬 You can reach Prashanth directly via:
-      <br/>• <strong>Email:</strong> <a href="mailto:polisheetyprashanth246@gmail.com" style="color:#38bdf8;">polisheetyprashanth246@gmail.com</a>
-      <br/>• <strong>Phone:</strong> +91-9121990362
-      <br/>• <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/polisetty-prashanth-5440b5298" target="_blank" style="color:#38bdf8;">Profile Link</a>`;
-    }
-
-    if (q.includes('education') || q.includes('college') || q.includes('cgpa') || q.includes('degree')) {
-      return `🎓 Prashanth is pursuing his <strong>B.Tech in Computer Science (AI & ML)</strong> at Neil Gogte Institute of Technology (NGIT) with an <strong>8.06 CGPA</strong>. He also holds a 4-year <strong>Diploma in Tool & Die Making</strong> from CITD Hyderabad (74.15%).`;
-    }
-
-    if (q.includes('leetcode') || q.includes('dsa') || q.includes('algorithm')) {
-      return `💻 Prashanth has solved <strong>103 problems</strong> on LeetCode (64 Easy, 37 Medium, 2 Hard), with 229 submissions in the past year! His strongest algorithmic areas include <strong>Arrays (53 solved)</strong>, <strong>Two Pointers (20)</strong>, <strong>Binary Search (19)</strong>, <strong>Hash Tables (17)</strong>, and <strong>SQL Databases (17)</strong>. View his profile at <a href="https://leetcode.com/u/polisetty_prashanth/" target="_blank" style="color:#38bdf8;">leetcode.com/u/polisetty_prashanth</a>!`;
-    }
-
-    if (q.includes('resume') || q.includes('cv')) {
-      return `📄 You can download Prashanth's verified PDF resume directly using the 'Resume' button in the top navigation or in the hero section!`;
-    }
-
-    return `Thanks for asking! Prashanth is a Computer Science (AI & ML) engineer skilled in GenAI, LangChain, FastAPI, and RAG pipelines. Check out his <strong>PayPilot-AI</strong> project or test his live app at <a href="https://ragbotq.streamlit.app" target="_blank" style="color:#38bdf8;">ragbotq.streamlit.app</a>!`;
+    return bubble;
   }
 }
 
 /* ==========================================================================
-   6. Resume Modal & Downloader
+   6. Contact Form Handler (Direct Delivery to Gmail via Web3Forms)
    ========================================================================== */
-function initResumeModal() {
-  const viewResumeBtn = document.getElementById('viewResumeBtn');
-  const resumeModal = document.getElementById('resumeModal');
-  const closeModalBtn = document.getElementById('closeModalBtn');
-  const closeModalFooterBtn = document.getElementById('closeModalFooterBtn');
+const WEB3FORMS_ACCESS_KEY = '95f54db0-e840-4bf4-8001-5cc45ee30019';
 
-  if (viewResumeBtn && resumeModal) {
-    viewResumeBtn.addEventListener('click', openResumeModal);
-  }
-
-  if (closeModalBtn && resumeModal) {
-    closeModalBtn.addEventListener('click', closeResumeModal);
-  }
-
-  if (closeModalFooterBtn && resumeModal) {
-    closeModalFooterBtn.addEventListener('click', closeResumeModal);
-  }
-
-  // Close modal when clicking outside of dialog
-  if (resumeModal) {
-    resumeModal.addEventListener('click', (e) => {
-      if (e.target === resumeModal) {
-        closeResumeModal();
-      }
-    });
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && resumeModal && resumeModal.classList.contains('open')) {
-      closeResumeModal();
-    }
-  });
-}
-
-function openResumeModal() {
-  const modal = document.getElementById('resumeModal');
-  if (modal) modal.classList.add('open');
-}
-
-function closeResumeModal() {
-  const modal = document.getElementById('resumeModal');
-  if (modal) modal.classList.remove('open');
-}
-
-/* ==========================================================================
-   7. Contact Form Handler
-   ========================================================================== */
 function initContactForm() {
   const contactForm = document.getElementById('contactForm');
   const formStatus = document.getElementById('formStatus');
   const submitBtn = document.getElementById('submitBtn');
 
-  if (!contactForm || !formStatus) return;
+  if (!contactForm || !formStatus || !submitBtn) return;
 
-  contactForm.addEventListener('submit', (e) => {
+  let statusTimeout;
+
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    clearTimeout(statusTimeout);
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const subjectInput = document.getElementById('subject');
+    const messageInput = document.getElementById('message');
+
+    const name = nameInput ? nameInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const subject = subjectInput ? subjectInput.value.trim() : 'Portfolio Contact Inquiry';
+    const message = messageInput ? messageInput.value.trim() : '';
 
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Sending...</span>';
+    formStatus.replaceChildren();
+    formStatus.className = 'form-status';
 
-    // Simulate sending email / webhook
-    setTimeout(() => {
-      formStatus.innerHTML = `<span style="color:#34d399;"><i class="fa-solid fa-circle-check"></i> Thank you, ${name}! Your message has been received. Prashanth will reply to <strong>${email}</strong> shortly.</span>`;
-      contactForm.reset();
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      name: name,
+      email: email,
+      subject: subject ? `[Portfolio] ${subject}` : `[Portfolio Message from ${name}]`,
+      message: message,
+      from_name: name || 'Portfolio Visitor'
+    };
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setFormStatus(`Thank you, ${name || 'there'}! Your message has been sent directly to Prashanth's inbox.`, 'ok', 'fa-circle-check');
+        contactForm.reset();
+      } else {
+        const errorMessage = typeof result.message === 'string' && result.message.trim()
+          ? result.message
+          : 'Submission failed. Please email polisheetyprashanth246@gmail.com directly.';
+        setFormStatus(errorMessage, 'err', 'fa-triangle-exclamation');
+      }
+    } catch (error) {
+      setFormStatus('Network error. Please email polisheetyprashanth246@gmail.com directly.', 'err', 'fa-triangle-exclamation');
+    } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> <span>Send Message</span>';
 
-      setTimeout(() => {
-        formStatus.innerHTML = '';
-      }, 7000);
-    }, 1000);
+      statusTimeout = setTimeout(() => {
+        formStatus.replaceChildren();
+        formStatus.className = 'form-status';
+        statusTimeout = undefined;
+      }, 9000);
+    }
   });
+
+  function setFormStatus(message, type, iconName) {
+    const icon = document.createElement('i');
+    icon.className = `fa-solid ${iconName}`;
+    icon.setAttribute('aria-hidden', 'true');
+
+    const text = document.createElement('span');
+    text.textContent = ` ${message}`;
+
+    formStatus.className = `form-status ${type}`;
+    formStatus.replaceChildren(icon, text);
+  }
 }
