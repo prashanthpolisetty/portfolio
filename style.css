@@ -571,7 +571,7 @@ h1, h2, h3, h4, .brand-name, .hero-title, .section-title {
 
 /* ==========================================================================
    Technical Pipeline Animated Visual (Hero Data Flow Banner)
-   User Query -> Retriever -> Vector DB -> LLM Reasoning -> Verified Output
+   User Query -> Retriever -> Vector DB -> LLM Reasoning -> Answer
    ========================================================================== */
 .hero-pipeline-visual {
   width: 100%;

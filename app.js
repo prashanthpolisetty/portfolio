@@ -34,7 +34,7 @@ function initTypingEffect() {
   const roles = [
     'Autonomous GenAI & RAG Systems',
     'Agentic Commerce with PayPilot-AI',
-    'High-Performance FastAPI Backends',
+    'FastAPI & Python Backends',
     'Scalable Machine Learning Pipelines'
   ];
 
@@ -157,7 +157,7 @@ Passionate about taking autonomous Generative AI and agentic systems into produc
 View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" target="_blank" rel="noopener noreferrer" class="text-cyan">leetcode.com/u/polisetty_prashanth</a>
 `,
     skills: `
-<span class="text-indigo">Generative AI & LLMs:</span> LangChain, CrewAI, Llama 3.1, Gemini API, Sentence Transformers, RAG
+<span class="text-indigo">Generative AI & LLMs:</span> LangChain, CrewAI, Gemini API, Groq, Llama 3.1 (configured in Meeting Minutes Generator), Sentence Transformers, RAG
 <span class="text-cyan">Backend & Data:</span> FastAPI, Flask, ChromaDB, PostgreSQL, MySQL, Pydantic, REST APIs
 <span class="text-purple">Languages:</span> Python, Java, JavaScript, TypeScript, SQL, HTML5/CSS3
 <span class="text-yellow">Tools:</span> Streamlit, Git/GitHub, Docker, VS Code, Cursor, Jupyter
@@ -165,7 +165,7 @@ View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" tar
     projects: `
 1. <span class="text-indigo font-bold">PayPilot-AI</span>: Agentic commerce platform for Razorpay Buildathon (Track 01)
 2. <span class="text-cyan font-bold">Document RAG Chatbot</span>: Live interactive PDF/text RAG bot (<a href="https://ragbotq.streamlit.app" target="_blank" rel="noopener noreferrer" class="text-indigo">ragbotq.streamlit.app</a>)
-3. <span class="text-purple font-bold">AI Resume Analyzer</span>: High-throughput candidate screener using Gemini & Pydantic
+3. <span class="text-purple font-bold">AI Resume Analyzer</span>: AI resume screener built with LangChain and the Gemini API that produces ATS-style scores and skill-gap feedback as schema-validated JSON (Pydantic)
 4. <span class="text-yellow font-bold">Meeting Minutes Generator</span>: Live deployed app (<a href="https://meeting-minutes-frontend.onrender.com" target="_blank" rel="noopener noreferrer" class="text-indigo">meeting-minutes-frontend.onrender.com</a>)
 5. <span class="text-muted font-bold">Binance Trading Bot</span>: Sub-minute algorithmic cryptocurrency execution bot
 `,
@@ -179,8 +179,9 @@ Repo: <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank
 `,
     ragbot: `
 <span class="text-cyan font-bold">Document RAG Chatbot</span>
-• Evaluation accuracy >80% with all-MiniLM-L6-v2 embeddings
-• Persistent ChromaDB vector storage + Llama 3.1 inference
+• Gemini API question answering with a local Ollama fallback
+• Uses all-MiniLM-L6-v2 embeddings and a persistent ChromaDB vector store for retrieval.
+• Tags indexed text chunks with source and chunk metadata.
 • Live Streamlit app: <a href="https://ragbotq.streamlit.app" target="_blank" rel="noopener noreferrer" class="text-indigo">ragbotq.streamlit.app</a>
 `,
     meeting: `
@@ -192,7 +193,7 @@ Repo: <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank
 Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" target="_blank" rel="noopener noreferrer" class="text-cyan">github.com/prashanthpolisetty/Meeting-minutes-Generator</a>
 `,
     education: `
-• <span class="text-indigo font-bold">B.Tech in CSE (AI & ML)</span>: Neil Gogte Institute of Technology (2024–2027) | CGPA: 8.06
+• <span class="text-indigo font-bold">B.Tech in CSE (AI & ML)</span>: Neil Gogte Institute of Technology (2024–2027) | CGPA: 8.31
 • <span class="text-cyan font-bold">Diploma in Tool & Die Making</span>: CITD Hyderabad (2020–2024) | 74.15%
 • <span class="text-yellow font-bold">10th Grade (Secondary)</span>: Navodaya High School, Gadwal (2020) | CGPA: 9.8
 `,
@@ -200,7 +201,8 @@ Repo: <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" 
 • <span class="text-indigo font-bold">AI/ML Intern</span> @ VRITTIFY AI (Jul 2026 – Oct 2026):
   Contributed to product development, research, and operations support.
 • <span class="text-indigo font-bold">Machine Learning Intern</span> @ Unified Mentor (May 2025 – Jun 2025):
-  Predictive regression models (House & Mobile pricing) and comprehensive EDA.
+  Built end-to-end regression pipelines in Python and Scikit-Learn for House Price Prediction and Mobile Phone Price Estimation.
+  Performed exploratory data analysis (EDA): missing-value handling, correlation heatmaps, feature engineering and data scaling.
 • <span class="text-cyan font-bold">Industrial Engineering Trainee</span> @ Tata Advanced Systems Limited (2023):
   Precision tool engineering and structural compliance.
 `,
@@ -343,10 +345,10 @@ function initAiAssistant() {
       return 'PayPilot-AI is an agentic commerce platform built for the Razorpay Buildathon. Its 18-step pipeline uses semantic product search, contextual upsells, deterministic transaction caps, server-side Razorpay signature validation, and human approval before payment. It is built with FastAPI, React, PostgreSQL, Razorpay API, Docker, and Gemini/Groq. The source code is on GitHub: github.com/prashanthpolisetty/PayPilot-AI.';
     }
     if (matches('rag chatbot', 'document rag', 'rag bot', 'retrieval augmented')) {
-      return 'The Document RAG Chatbot lets users upload PDF or text documents and ask questions about their content. It uses LangChain, ChromaDB, Llama 3.1, and Streamlit; the portfolio lists over 80% evaluation accuracy and 35% reduced document overhead. Try it at ragbotq.streamlit.app or view github.com/prashanthpolisetty/RAG-bot.';
+      return 'The Document RAG Chatbot lets users upload PDF or text documents and ask questions about their content. It uses LangChain, the Gemini API for question answering with a local Ollama fallback, all-MiniLM-L6-v2 embeddings, persistent ChromaDB storage, and Streamlit. Indexed text chunks are tagged with source and chunk metadata. Try it at ragbotq.streamlit.app or view github.com/prashanthpolisetty/RAG-bot.';
     }
     if (matches('resume analyzer', 'resume screener', 'resume project')) {
-      return 'The AI Resume Screener & Analyzer uses LangChain and Google Gemini to evaluate resumes. It extracts keyword gaps with Pydantic schemas and provides ATS scoring and grammar analysis. The portfolio reports 15x faster processing than manual screening. Source: github.com/prashanthpolisetty/AI-Resume-Analyzer.';
+      return 'The AI resume screener is built with LangChain and the Gemini API and produces ATS-style scores and skill-gap feedback as schema-validated JSON (Pydantic). It uses few-shot and Chain-of-Thought prompts with Pydantic-validated JSON output. Source: github.com/prashanthpolisetty/AI-Resume-Analyzer.';
     }
     if (matches('meeting minutes', 'minutes generator', 'meeting assistant')) {
       return 'The Meeting Minutes Generator transcribes recordings locally with OpenAI Whisper, then uses cloud language models to create summaries, decisions, and action items and email participants. Its stack includes TypeScript, Python, Whisper, Groq, and Gemini. Live app: meeting-minutes-frontend.onrender.com.';
@@ -361,10 +363,10 @@ function initAiAssistant() {
       return 'Prashanth’s experience includes an AI/ML internship at VRITTIFY AI (July–October 2026), contributing to product development, research, and operations support; a Machine Learning internship at Unified Mentor (May–June 2025), where he built house-price and mobile-phone price regression pipelines and performed exploratory data analysis; and industrial engineering training at Tata Advanced Systems in 2023.';
     }
     if (matches('education', 'degree', 'college', 'university', 'study', 'school', 'cgpa', 'diploma')) {
-      return 'Prashanth is pursuing a B.Tech in Computer Science Engineering (AI & ML) at Neil Gogte Institute of Technology in Hyderabad (2024–2027; CGPA 8.06/10). He completed a Diploma in Tool & Die Making at CITD Hyderabad (2020–2024; 74.15%) and secondary school at Navodaya High School, Gadwal (CGPA 9.8/10, completed 2020).';
+      return 'Prashanth is pursuing a B.Tech in Computer Science Engineering (AI & ML) at Neil Gogte Institute of Technology in Hyderabad (2024–2027; CGPA 8.31/10). He completed a Diploma in Tool & Die Making at CITD Hyderabad (2020–2024; 74.15%) and secondary school at Navodaya High School, Gadwal (CGPA 9.8/10, completed 2020).';
     }
     if (matches('genai', 'generative ai', 'llm', 'rag skill', 'langchain', 'crewai', 'gemini', 'llama', 'vector search', 'prompt engineering')) {
-      return 'Generative AI and LLM skills listed on the portfolio: LangChain, CrewAI, RAG architecture, Llama 3.1, Google Gemini API, Sentence Transformers, vector search, and prompt engineering (CoT/Few-Shot).';
+      return 'Generative AI and LLM skills listed on the portfolio: LangChain, CrewAI, RAG architecture, Gemini API, Groq, Llama 3.1 (configured in the Meeting Minutes Generator), Sentence Transformers, vector search, and prompt engineering (CoT/Few-Shot).';
     }
     if (matches('backend', 'database', 'fastapi', 'flask', 'chromadb', 'postgres', 'mysql', 'pydantic', 'razorpay api', 'rest api')) {
       return 'Backend and database skills listed on the portfolio: FastAPI, Flask, ChromaDB, PostgreSQL, MySQL, Pydantic, RESTful APIs, and Razorpay API integration.';
@@ -379,7 +381,7 @@ function initAiAssistant() {
       return 'Prashanth’s skills span Generative AI and LLMs (LangChain, CrewAI, RAG, Gemini), backend and databases (FastAPI, Flask, PostgreSQL, ChromaDB), programming (Python, Java, JavaScript, TypeScript, SQL), and tools (Docker, Streamlit, Scikit-Learn, Pandas/NumPy). Ask about a category for the full list.';
     }
     if (matches('about', 'who is', 'who s', 'profile', 'background', 'introduce')) {
-      return 'Prashanth is a Computer Science (AI & ML) engineering student focused on Generative AI, RAG systems, agentic workflows, and Python backends. His portfolio highlights LLM integrations, reliable backend services, deploying AI applications, and data structures and algorithms. He studies at NGIT in Hyderabad.';
+      return 'Prashanth is a final-year Computer Science (AI & ML) student building RAG applications, agentic workflows and Python backends with FastAPI and LangChain. He has deployed a live RAG chatbot and a meeting-minutes app, and built PayPilot-AI for the Razorpay Buildathon. He studies at NGIT in Hyderabad.';
     }
     if (matches('live', 'demo', 'deployed', 'try it', 'open app')) {
       return 'Live project demos listed on the portfolio:\n• Document RAG Chatbot: https://ragbotq.streamlit.app/\n• Meeting Minutes Generator: https://meeting-minutes-frontend.onrender.com/\nPayPilot-AI is listed with its GitHub source but no live demo link.';

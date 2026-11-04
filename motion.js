@@ -39,10 +39,10 @@
     if (!el) return;
 
     const roles = [
-      'Autonomous GenAI & RAG Systems',
+      'RAG Applications with GenAI',
       'Agentic Commerce with PayPilot-AI',
-      'High-Performance FastAPI Backends',
-      'Scalable Machine Learning Pipelines'
+      'FastAPI & Python Backends',
+      'Python Machine Learning Projects'
     ];
 
     if (reduceMotion()) {
