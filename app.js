@@ -143,6 +143,7 @@ Available commands:
   <span class="text-cyan">skills</span>      : List primary AI, backend & language skills
   <span class="text-cyan">projects</span>    : View list of flagship projects & repositories
   <span class="text-cyan">paypilot</span>    : Deep-dive into PayPilot-AI (Razorpay Buildathon)
+  <span class="text-cyan">hallucination</span>: Details on the hybrid LLM hallucination detection system
   <span class="text-cyan">ragbot</span>      : Information on Document RAG Chatbot
   <span class="text-cyan">meeting</span>     : Information on Meeting Minutes Generator
   <span class="text-cyan">education</span>   : View B.Tech & CITD degree details
@@ -157,17 +158,18 @@ Passionate about taking autonomous Generative AI and agentic systems into produc
 View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" target="_blank" rel="noopener noreferrer" class="text-cyan">leetcode.com/u/polisetty_prashanth</a>
 `,
     skills: `
-<span class="text-indigo">Generative AI & LLMs:</span> LangChain, CrewAI, Gemini API, Groq, Llama 3.1 (configured in Meeting Minutes Generator), Sentence Transformers, RAG
-<span class="text-cyan">Backend & Data:</span> FastAPI, Flask, ChromaDB, PostgreSQL, MySQL, Pydantic, REST APIs
+<span class="text-indigo">Generative AI & LLMs:</span> LangChain, CrewAI, Gemini API, Groq, Llama 3.1 (configured in Meeting Minutes Generator), Sentence Transformers, RAG, NLI Verification (DeBERTa-v3), Hallucination Detection
+<span class="text-cyan">Backend & Data:</span> FastAPI, Flask, ChromaDB, PostgreSQL, MySQL, SQLite, Pydantic, REST APIs
 <span class="text-purple">Languages:</span> Python, Java, JavaScript, TypeScript, SQL, HTML5/CSS3
-<span class="text-yellow">Tools:</span> Streamlit, Git/GitHub, Docker, VS Code, Cursor, Jupyter
+<span class="text-yellow">Tools:</span> Streamlit, Git/GitHub, Docker, XGBoost, spaCy, VS Code, Cursor, Jupyter
 `,
     projects: `
 1. <span class="text-indigo font-bold">PayPilot-AI</span>: Agentic commerce platform for Razorpay Buildathon (Track 01)
 2. <span class="text-cyan font-bold">Document RAG Chatbot</span>: Live interactive PDF/text RAG bot (<a href="https://ragbotq.streamlit.app" target="_blank" rel="noopener noreferrer" class="text-indigo">ragbotq.streamlit.app</a>)
-3. <span class="text-purple font-bold">AI Resume Analyzer</span>: AI resume screener built with LangChain and the Gemini API that produces ATS-style scores and skill-gap feedback as schema-validated JSON (Pydantic)
-4. <span class="text-yellow font-bold">Meeting Minutes Generator</span>: Live deployed app (<a href="https://meeting-minutes-frontend.onrender.com" target="_blank" rel="noopener noreferrer" class="text-indigo">meeting-minutes-frontend.onrender.com</a>)
-5. <span class="text-muted font-bold">Binance Trading Bot</span>: Sub-minute algorithmic cryptocurrency execution bot
+3. <span class="text-purple font-bold">Hybrid LLM Hallucination Detection & Mitigation</span>: Dual-signal verification with DeBERTa-v3 NLI and an XGBoost risk classifier
+4. <span class="text-purple font-bold">AI Resume Analyzer</span>: AI resume screener built with LangChain and the Gemini API that produces ATS-style scores and skill-gap feedback as schema-validated JSON (Pydantic)
+5. <span class="text-yellow font-bold">Meeting Minutes Generator</span>: Live deployed app (<a href="https://meeting-minutes-frontend.onrender.com" target="_blank" rel="noopener noreferrer" class="text-indigo">meeting-minutes-frontend.onrender.com</a>)
+6. <span class="text-muted font-bold">Binance Trading Bot</span>: Sub-minute algorithmic cryptocurrency execution bot
 `,
     paypilot: `
 <span class="text-indigo font-bold">PayPilot-AI — Razorpay AI Growth & Agentic Commerce</span>
@@ -176,6 +178,14 @@ View LeetCode profile: <a href="https://leetcode.com/u/polisetty_prashanth/" tar
 • Strict deterministic financial caps (₹1,00,000 ceiling)
 • Server-side HMAC-SHA256 signature verification & idempotent webhooks
 Repo: <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank" rel="noopener noreferrer" class="text-cyan">github.com/prashanthpolisetty/PayPilot-AI</a>
+`,
+    hallucination: `
+<span class="text-indigo font-bold">Hybrid LLM Hallucination Detection & Mitigation</span>
+• Combines self-consistency across stochastic generations with authoritative web retrieval and DeBERTa-v3 NLI for claim-level risk scoring.
+• XGBoost uses a 9-feature vector; reached 0.9744 accuracy, 0.9697 F1 and 0.9953 AUROC on HaluEval QA and TruthfulQA claim-evidence records using leakage-safe grouped splits. Logistic Regression baseline: 0.9206 F1.
+• For high-risk claims, highlights the contradicted claim and re-prompts the same LLM with verified evidence to produce a corrected answer.
+• FastAPI, real-time Server-Sent Events, SQLite audit logging, and a React 18 + Vite dashboard.
+• Tech: Python, FastAPI, React 18, spaCy, DeBERTa-v3 NLI, XGBoost, Sentence Transformers, Gemini API, SQLite.
 `,
     ragbot: `
 <span class="text-cyan font-bold">Document RAG Chatbot</span>
@@ -339,10 +349,13 @@ function initAiAssistant() {
     const matches = (...terms) => terms.some((term) => query.includes(term));
 
     if (matches('contact', 'email', 'reach', 'linkedin', 'github', 'location', 'where is')) {
-      return 'You can contact Prashanth at polisheetyprashanth246@gmail.com, connect on LinkedIn at linkedin.com/in/polisetty-prashanth-5440b5298, or find his projects at github.com/prashanthpolisetty. He is based in Hyderabad, Telangana, India.';
+      return 'You can contact Prashanth at polisheetyprashanth246@gmail.com, connect on LinkedIn at linkedin.com/in/polisetty-prashanth-5440b5298, or find his projects at github.com/prashanthpolisetty. He is based in Hyderabad, Telangana, India. His hybrid LLM hallucination detection and mitigation project uses Python, FastAPI, React 18, spaCy, DeBERTa-v3 NLI, XGBoost, Sentence Transformers, Gemini API, and SQLite.';
     }
     if (matches('paypilot', 'pay pilot')) {
       return 'PayPilot-AI is an agentic commerce platform built for the Razorpay Buildathon. Its 18-step pipeline uses semantic product search, contextual upsells, deterministic transaction caps, server-side Razorpay signature validation, and human approval before payment. It is built with FastAPI, React, PostgreSQL, Razorpay API, Docker, and Gemini/Groq. The source code is on GitHub: github.com/prashanthpolisetty/PayPilot-AI.';
+    }
+    if (matches('hallucination detection', 'hallucination mitigation', 'hallucination')) {
+      return 'The Hybrid LLM Hallucination Detection & Mitigation system detects, explains, and mitigates factual hallucinations with dual-signal verification: self-consistency across stochastic generations and authoritative web retrieval verified with DeBERTa-v3 NLI. An XGBoost classifier turns a 9-feature vector into a claim-level risk score. It reached 0.9744 accuracy, 0.9697 F1, and 0.9953 AUROC on HaluEval QA and TruthfulQA claim-evidence records using leakage-safe grouped splits; a Logistic Regression baseline scored 0.9206 F1. For high-risk claims, the contradicted claim is highlighted and the same LLM is re-prompted with verified evidence to produce a corrected answer. The system uses FastAPI with real-time Server-Sent Events and SQLite audit logging, plus a React 18 + Vite dashboard. Tech: Python, FastAPI, React 18, spaCy, DeBERTa-v3 NLI, XGBoost, Sentence Transformers, Gemini API, and SQLite.';
     }
     if (matches('rag chatbot', 'document rag', 'rag bot', 'retrieval augmented')) {
       return 'The Document RAG Chatbot lets users upload PDF or text documents and ask questions about their content. It uses LangChain, the Gemini API for question answering with a local Ollama fallback, all-MiniLM-L6-v2 embeddings, persistent ChromaDB storage, and Streamlit. Indexed text chunks are tagged with source and chunk metadata. Try it at ragbotq.streamlit.app or view github.com/prashanthpolisetty/RAG-bot.';
@@ -357,7 +370,7 @@ function initAiAssistant() {
       return 'The Binance Trading Bot scans cryptocurrency markets, calculates indicators, identifies buy/sell signals, and dispatches trading triggers. The portfolio lists Python, the Binance API, and financial algorithms as its main technologies. Source: github.com/prashanthpolisetty/binance-trading-bot.';
     }
     if (matches('project', 'projects', 'built', 'portfolio work')) {
-      return 'Featured projects are PayPilot-AI (agentic commerce), the Document RAG Chatbot, an AI Resume Screener & Analyzer, a Meeting Minutes Generator, and a Binance Trading Bot. The RAG chatbot and Meeting Minutes Generator have live demos. Ask about any project by name for details.';
+      return 'Featured projects are PayPilot-AI (agentic commerce), the Document RAG Chatbot, the Hybrid LLM Hallucination Detection & Mitigation system (Python, FastAPI, React 18, spaCy, DeBERTa-v3 NLI, XGBoost, Sentence Transformers, Gemini API, SQLite), an AI Resume Screener & Analyzer, a Meeting Minutes Generator, and a Binance Trading Bot. The RAG chatbot and Meeting Minutes Generator have live demos. Ask about any project by name for details.';
     }
     if (matches('intern', 'experience', 'work history', 'career', 'vr ittify', 'vrittify', 'unified mentor', 'tata advanced')) {
       return 'Prashanth’s experience includes an AI/ML internship at VRITTIFY AI (July–October 2026), contributing to product development, research, and operations support; a Machine Learning internship at Unified Mentor (May–June 2025), where he built house-price and mobile-phone price regression pipelines and performed exploratory data analysis; and industrial engineering training at Tata Advanced Systems in 2023.';
@@ -365,23 +378,23 @@ function initAiAssistant() {
     if (matches('education', 'degree', 'college', 'university', 'study', 'school', 'cgpa', 'diploma')) {
       return 'Prashanth is pursuing a B.Tech in Computer Science Engineering (AI & ML) at Neil Gogte Institute of Technology in Hyderabad (2024–2027; CGPA 8.31/10). He completed a Diploma in Tool & Die Making at CITD Hyderabad (2020–2024; 74.15%) and secondary school at Navodaya High School, Gadwal (CGPA 9.8/10, completed 2020).';
     }
-    if (matches('genai', 'generative ai', 'llm', 'rag skill', 'langchain', 'crewai', 'gemini', 'llama', 'vector search', 'prompt engineering')) {
-      return 'Generative AI and LLM skills listed on the portfolio: LangChain, CrewAI, RAG architecture, Gemini API, Groq, Llama 3.1 (configured in the Meeting Minutes Generator), Sentence Transformers, vector search, and prompt engineering (CoT/Few-Shot).';
+    if (matches('genai', 'generative ai', 'llm', 'rag skill', 'langchain', 'crewai', 'gemini', 'llama', 'vector search', 'prompt engineering', 'nli verification', 'deberta-v3')) {
+      return 'Generative AI and LLM skills listed on the portfolio: LangChain, CrewAI, RAG architecture, Gemini API, Groq, Llama 3.1 (configured in the Meeting Minutes Generator), Sentence Transformers, vector search, prompt engineering (CoT/Few-Shot), NLI Verification (DeBERTa-v3), and Hallucination Detection.';
     }
-    if (matches('backend', 'database', 'fastapi', 'flask', 'chromadb', 'postgres', 'mysql', 'pydantic', 'razorpay api', 'rest api')) {
-      return 'Backend and database skills listed on the portfolio: FastAPI, Flask, ChromaDB, PostgreSQL, MySQL, Pydantic, RESTful APIs, and Razorpay API integration.';
+    if (matches('backend', 'database', 'fastapi', 'flask', 'chromadb', 'postgres', 'mysql', 'sqlite', 'pydantic', 'razorpay api', 'rest api')) {
+      return 'Backend and database skills listed on the portfolio: FastAPI, Flask, ChromaDB, PostgreSQL, MySQL, SQLite, Pydantic, RESTful APIs, and Razorpay API integration. SQLite is used for audit logging in the hybrid LLM hallucination detection and mitigation system.';
     }
     if (matches('language', 'programming', 'python', 'java', 'javascript', 'typescript', 'sql', 'html', 'css', 'data structure', 'algorithm')) {
       return 'Languages and core CS skills listed on the portfolio: Python, Java, JavaScript (ES6+), TypeScript, SQL, HTML5/CSS3, and data structures and algorithms.';
     }
-    if (matches('tool', 'devops', 'docker', 'streamlit', 'scikit', 'sklearn', 'pandas', 'numpy', 'jupyter', 'vscode', 'vs code', 'github')) {
-      return 'Tools, data, and DevOps skills listed on the portfolio: Git/GitHub, Streamlit, Docker, Scikit-Learn, Pandas, NumPy, VS Code, Cursor, and Jupyter Notebooks.';
+    if (matches('tool', 'devops', 'docker', 'streamlit', 'scikit', 'sklearn', 'pandas', 'numpy', 'xgboost', 'spacy', 'jupyter', 'vscode', 'vs code', 'github')) {
+      return 'Tools, data, and DevOps skills listed on the portfolio: Git/GitHub, Streamlit, Docker, Scikit-Learn, Pandas, NumPy, XGBoost, spaCy, VS Code, Cursor, and Jupyter Notebooks. XGBoost and spaCy are used in the hybrid LLM hallucination detection and mitigation system.';
     }
     if (matches('skill', 'tech stack', 'technologies', 'technology', 'what can he')) {
-      return 'Prashanth’s skills span Generative AI and LLMs (LangChain, CrewAI, RAG, Gemini), backend and databases (FastAPI, Flask, PostgreSQL, ChromaDB), programming (Python, Java, JavaScript, TypeScript, SQL), and tools (Docker, Streamlit, Scikit-Learn, Pandas/NumPy). Ask about a category for the full list.';
+      return 'Prashanth’s skills span Generative AI and LLMs (LangChain, CrewAI, RAG, Gemini, NLI Verification (DeBERTa-v3), Hallucination Detection), backend and databases (FastAPI, Flask, PostgreSQL, ChromaDB, SQLite), programming (Python, Java, JavaScript, TypeScript, SQL), and tools (Docker, Streamlit, Scikit-Learn, Pandas/NumPy, XGBoost, spaCy). The hybrid LLM hallucination detection and mitigation system uses these newer tools.';
     }
     if (matches('about', 'who is', 'who s', 'profile', 'background', 'introduce')) {
-      return 'Prashanth is a final-year Computer Science (AI & ML) student building RAG applications, agentic workflows and Python backends with FastAPI and LangChain. He has deployed a live RAG chatbot and a meeting-minutes app, and built PayPilot-AI for the Razorpay Buildathon. He studies at NGIT in Hyderabad.';
+      return 'Prashanth is a final-year Computer Science (AI & ML) student building RAG applications, agentic workflows and Python backends with FastAPI and LangChain. He has deployed a live RAG chatbot and a meeting-minutes app, built PayPilot-AI for the Razorpay Buildathon, and built a hybrid LLM hallucination detection and mitigation system using self-consistency, DeBERTa-v3 NLI, and XGBoost. He studies at NGIT in Hyderabad.';
     }
     if (matches('live', 'demo', 'deployed', 'try it', 'open app')) {
       return 'Live project demos listed on the portfolio:\n• Document RAG Chatbot: https://ragbotq.streamlit.app/\n• Meeting Minutes Generator: https://meeting-minutes-frontend.onrender.com/\nPayPilot-AI is listed with its GitHub source but no live demo link.';
