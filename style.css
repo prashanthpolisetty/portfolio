@@ -1,45 +1,50 @@
 /* ==========================================================================
    Polisetty Prashanth - Senior AI/ML Engineer Portfolio Design System
-   Aesthetic: Technical Dark Luxury, Cyber-Slate, Electric Cyan & Pure Violet
+   Aesthetic: Professional navy, slate, and blue
    High Contrast • Crisp Typography • Controlled Motion • Production Grade
    ========================================================================== */
 
 :root {
-  /* Surface & Canvas System */
-  --bg-dark: #05070d;
-  --bg-canvas: #070a12;
-  --bg-card: rgba(11, 16, 28, 0.65);
-  --bg-card-hover: rgba(16, 23, 40, 0.85);
-  --bg-glass: rgba(7, 10, 18, 0.78);
-  --bg-elevated: rgba(14, 20, 36, 0.9);
+  --bg: #0B1220;
+  --surface: #111B2E;
+  --line: #22304A;
+  --text: #E8EDF5;
+  --muted: #9AA8BF;
+  --accent: #4F8CFF;
+  --frame-accent-blue: #4F8CFF;
+  --frame-accent-teal: #3FA7A0;
+  --frame-accent-slate: #8A97B0;
+  --white: #FFFFFF;
 
-  /* Subtle Architectural Borders */
-  --border-glass: rgba(255, 255, 255, 0.07);
-  --border-subtle: rgba(255, 255, 255, 0.12);
-  --border-glass-hover: rgba(56, 189, 248, 0.35);
-  --border-accent: rgba(99, 102, 241, 0.3);
+  --bg-dark: var(--bg);
+  --bg-canvas: var(--bg);
+  --bg-card: var(--surface);
+  --bg-card-hover: var(--surface);
+  --bg-glass: var(--surface);
+  --bg-elevated: var(--surface);
 
-  /* Precise Technical Accents (Strategic, Never Flashy) */
-  --accent-cyan: #06b6d4;
-  --accent-cyan-bright: #38bdf8;
-  --accent-cyan-glow: rgba(6, 182, 212, 0.18);
+  --border-glass: var(--line);
+  --border-subtle: var(--line);
+  --border-glass-hover: var(--accent);
+  --border-accent: var(--line);
 
-  --accent-indigo: #6366f1;
-  --accent-violet: #818cf8;
-  --accent-purple: #a855f7;
-  --accent-purple-glow: rgba(168, 85, 247, 0.18);
+  --accent-cyan: var(--accent);
+  --accent-cyan-bright: var(--accent);
+  --accent-cyan-glow: transparent;
+  --accent-indigo: var(--accent);
+  --accent-violet: var(--accent);
+  --accent-purple: var(--accent);
+  --accent-purple-glow: transparent;
+  --accent-green: var(--accent);
+  --accent-green-glow: transparent;
+  --accent-amber: var(--accent);
+  --accent-amber-glow: transparent;
 
-  --accent-green: #10b981;
-  --accent-green-glow: rgba(16, 185, 129, 0.18);
-  --accent-amber: #f59e0b;
-  --accent-amber-glow: rgba(245, 158, 11, 0.18);
-
-  /* Text & Readability Scale */
-  --text-pure: #ffffff;
-  --text-light: #f1f5f9;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
-  --text-code: #cbd5e1;
+  --text-pure: var(--text);
+  --text-light: var(--text);
+  --text-muted: var(--muted);
+  --text-dim: var(--muted);
+  --text-code: var(--muted);
 
   /* Typography Families */
   --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -53,10 +58,9 @@
   --transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-smooth: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Elevation Shadows */
-  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-  --shadow-card: 0 10px 32px -8px rgba(0, 0, 0, 0.65);
-  --shadow-elevated: 0 20px 48px -12px rgba(0, 0, 0, 0.8), 0 0 24px -6px var(--accent-cyan-glow);
+  --shadow-subtle: none;
+  --shadow-card: none;
+  --shadow-elevated: none;
 }
 
 /* ==========================================================================

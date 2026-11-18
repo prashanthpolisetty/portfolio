@@ -100,6 +100,9 @@
         const show = filter === 'all' || cats.includes(filter);
         card.style.display = show ? '' : 'none';   // '' -> stylesheet's flex
       });
+      if (typeof window.updateProjectCarousel === 'function') {
+        window.updateProjectCarousel();
+      }
     }
 
     buttons.forEach((btn) => {
@@ -391,7 +394,6 @@
     initNavState();
     initScrollSpy();
     initCardSpotlight();
-    initHeroNetwork();
     initScrollReveals();
     initTimelineProgress();
     initAmbientMotion();

@@ -16,13 +16,258 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  const projectSlug = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+  if (projectSlug && window.renderProjectDetail) {
+    window.renderProjectDetail(projectSlug);
+  }
+
   initTypingEffect();
   initMobileMenu();
   initProjectFilters();
+  initProjectCarousel();
+  initProjectCardNavigation();
   initTerminal();
   initAiAssistant();
   initContactForm();
 });
+
+function initProjectCarousel() {
+  const carousel = document.querySelector('.projects-carousel');
+  const track = carousel?.querySelector('.projects-grid');
+  const cards = Array.from(track?.querySelectorAll('.project-card[data-project-slug]') || []);
+  const previousButton = document.getElementById('projectCarouselPrevious');
+  const nextButton = document.getElementById('projectCarouselNext');
+  const status = document.getElementById('projectCarouselStatus');
+
+  if (!carousel || !track || !cards.length || !previousButton || !nextButton || !status) return;
+
+  cards.forEach((card) => {
+    const item = document.createElement('div');
+    item.className = 'project-carousel-item';
+    const face = document.createElement('div');
+    face.className = 'project-carousel-face';
+    track.insertBefore(item, card);
+    item.appendChild(face);
+    face.appendChild(card);
+  });
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let visibleCards = [];
+  let rotation = 0;
+  let pointerInside = carousel.matches(':hover');
+  let focusInside = carousel.contains(document.activeElement);
+  let dragging = false;
+  let movedDuringDrag = false;
+  let dragPointerId = null;
+  let dragStartX = 0;
+  let dragStartRotation = 0;
+  let suppressClick = false;
+  let animationFrame = 0;
+  let lastFrameTime = 0;
+  let currentIndex = -1;
+
+  function updatePositions() {
+    const count = visibleCards.length;
+    track.classList.toggle('is-single', count === 1);
+    if (!count) {
+      track.style.setProperty('--carousel-rotation', '0deg');
+      status.textContent = '00 / 00';
+      previousButton.disabled = true;
+      nextButton.disabled = true;
+      carousel.querySelector('.project-carousel-controls').hidden = true;
+      currentIndex = -1;
+      return;
+    }
+
+    const step = 360 / count;
+    const cardWidth = visibleCards[0].offsetWidth || 260;
+    const radiusScale = window.innerWidth <= 600 ? 0.85 : 1.1;
+    const radius = count === 1 ? 0 : Math.max(cardWidth * radiusScale, cardWidth / (2 * Math.tan(Math.PI / count)));
+    const normalizedRotation = ((rotation % 360) + 360) % 360;
+    const frontIndex = Math.round(((360 - normalizedRotation) % 360) / step) % count;
+    const frontChanged = currentIndex !== frontIndex;
+    track.style.setProperty('--carousel-radius', `${radius}px`);
+    track.style.setProperty('--carousel-rotation', `${rotation}deg`);
+
+    visibleCards.forEach((card, index) => {
+      const item = card.closest('.project-carousel-item');
+      const title = card.dataset.projectTitle || card.querySelector('.project-title')?.textContent || 'Project';
+      const cardAngle = rotation + index * step;
+      const radians = cardAngle * Math.PI / 180;
+      const depth = Math.cos(radians);
+      item.style.setProperty('--carousel-angle', `${index * step}deg`);
+      item.style.setProperty('--carousel-facing', `${-cardAngle}deg`);
+      item.style.setProperty('--frame-opacity', String(0.4 + 0.6 * ((depth + 1) / 2)));
+      item.style.zIndex = String(Math.round((depth + 1) * 50));
+      item.classList.toggle('is-current', index === frontIndex);
+      if (frontChanged) {
+        card.setAttribute('aria-current', String(index === frontIndex));
+        card.setAttribute('aria-label', `${title}. Project ${index + 1} of ${count}. Press Enter to open details.`);
+      }
+    });
+
+    if (frontChanged) {
+      status.textContent = `${String(frontIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+      currentIndex = frontIndex;
+    }
+    previousButton.disabled = count < 2;
+    nextButton.disabled = count < 2;
+    carousel.querySelector('.project-carousel-controls').hidden = count < 2;
+  }
+
+  function canAutoRotate() {
+    return visibleCards.length > 1
+      && !reducedMotion.matches
+      && !pointerInside
+      && !focusInside
+      && !dragging;
+  }
+
+  function animate(timestamp) {
+    if (!canAutoRotate()) {
+      animationFrame = 0;
+      lastFrameTime = 0;
+      return;
+    }
+
+    if (lastFrameTime) {
+      const elapsedSeconds = Math.min((timestamp - lastFrameTime) / 1000, 0.05);
+      rotation = (rotation + elapsedSeconds * 12) % 360;
+      updatePositions();
+    }
+    lastFrameTime = timestamp;
+    animationFrame = window.requestAnimationFrame(animate);
+  }
+
+  function syncAnimation() {
+    if (canAutoRotate()) {
+      if (!animationFrame) animationFrame = window.requestAnimationFrame(animate);
+      return;
+    }
+    if (animationFrame) window.cancelAnimationFrame(animationFrame);
+    animationFrame = 0;
+    lastFrameTime = 0;
+  }
+
+  function refreshCarousel() {
+    const previousSlug = visibleCards[currentIndex]?.dataset.projectSlug;
+    visibleCards = cards.filter((card) => window.getComputedStyle(card).display !== 'none');
+
+    cards.forEach((card) => {
+      card.closest('.project-carousel-item').style.display = visibleCards.includes(card) ? '' : 'none';
+      card.setAttribute('aria-current', 'false');
+    });
+
+    const retainedIndex = visibleCards.findIndex((card) => card.dataset.projectSlug === previousSlug);
+    const targetIndex = retainedIndex >= 0 ? retainedIndex : 0;
+    rotation = visibleCards.length > 1 ? -targetIndex * (360 / visibleCards.length) : 0;
+    currentIndex = -1;
+    updatePositions();
+    syncAnimation();
+  }
+
+  function moveBy(offset) {
+    if (visibleCards.length < 2) return;
+    rotation -= offset * (360 / visibleCards.length);
+    updatePositions();
+    syncAnimation();
+  }
+
+  previousButton.addEventListener('click', () => moveBy(-1));
+  nextButton.addEventListener('click', () => moveBy(1));
+
+  carousel.addEventListener('pointerenter', () => {
+    pointerInside = true;
+    syncAnimation();
+  });
+  carousel.addEventListener('pointerleave', () => {
+    pointerInside = false;
+    syncAnimation();
+  });
+  carousel.addEventListener('focusin', () => {
+    focusInside = true;
+    syncAnimation();
+  });
+  carousel.addEventListener('focusout', () => {
+    window.setTimeout(() => {
+      focusInside = carousel.contains(document.activeElement);
+      syncAnimation();
+    }, 0);
+  });
+
+  carousel.addEventListener('pointerdown', (event) => {
+    if (event.target instanceof Element && event.target.closest('button, a')) return;
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    dragging = true;
+    movedDuringDrag = false;
+    dragPointerId = event.pointerId;
+    dragStartX = event.clientX;
+    dragStartRotation = rotation;
+    carousel.classList.add('is-dragging');
+    syncAnimation();
+  });
+
+  window.addEventListener('pointermove', (event) => {
+    if (!dragging || event.pointerId !== dragPointerId) return;
+    const distance = event.clientX - dragStartX;
+    if (Math.abs(distance) > 6) movedDuringDrag = true;
+    if (!movedDuringDrag) return;
+    if (!carousel.hasPointerCapture(event.pointerId)) carousel.setPointerCapture(event.pointerId);
+    rotation = dragStartRotation + distance * 0.45;
+    updatePositions();
+  });
+
+  const endDrag = (event) => {
+    if (!dragging || event.pointerId !== dragPointerId) return;
+    if (carousel.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId);
+    dragging = false;
+    dragPointerId = null;
+    carousel.classList.remove('is-dragging');
+    if (movedDuringDrag) {
+      suppressClick = true;
+      window.setTimeout(() => { suppressClick = false; }, 0);
+    }
+    syncAnimation();
+  };
+  window.addEventListener('pointerup', endDrag);
+  window.addEventListener('pointercancel', endDrag);
+  carousel.addEventListener('click', (event) => {
+    if (!suppressClick) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    suppressClick = false;
+  }, true);
+
+  if (typeof reducedMotion.addEventListener === 'function') {
+    reducedMotion.addEventListener('change', () => {
+      syncAnimation();
+    });
+  }
+
+  window.addEventListener('resize', refreshCarousel, { passive: true });
+  window.updateProjectCarousel = refreshCarousel;
+  refreshCarousel();
+}
+
+function initProjectCardNavigation() {
+  const cards = document.querySelectorAll('.project-card[data-project-slug]');
+
+  cards.forEach((card) => {
+    const openDetails = () => {
+      const slug = card.dataset.projectSlug;
+      if (!slug) return;
+      window.location.assign(`/${slug}`);
+    };
+
+    card.addEventListener('click', openDetails);
+
+    card.addEventListener('keydown', (event) => {
+      if (event.target !== card || (event.key !== 'Enter' && event.key !== ' ')) return;
+      event.preventDefault();
+      openDetails();
+    });
+  });
+}
 
 /* ==========================================================================
    1. Dynamic Typing Effect (motion.js replaces this with a jitter-free version)
@@ -106,14 +351,22 @@ function initProjectFilters() {
   const projectCards = document.querySelectorAll('.project-card');
 
   filterBtns.forEach(btn => {
+    btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
+  });
+
+  filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
+      filterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
 
       const filter = btn.getAttribute('data-filter');
 
       projectCards.forEach(card => {
-        const categories = card.getAttribute('data-category') || '';
+        const categories = (card.getAttribute('data-category') || '').split(/\s+/);
         if (filter === 'all' || categories.includes(filter)) {
           card.style.display = 'flex';
           card.style.opacity = '1';
@@ -122,6 +375,7 @@ function initProjectFilters() {
           card.style.opacity = '0';
         }
       });
+      window.updateProjectCarousel?.();
     });
   });
 }

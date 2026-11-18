@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/paypilot-ai", "destination": "/index.html" },
+    { "source": "/document-rag-chatbot", "destination": "/index.html" },
+    { "source": "/hybrid-llm-hallucination-detection-mitigation", "destination": "/index.html" },
+    { "source": "/ai-resume-analyzer", "destination": "/index.html" },
+    { "source": "/meeting-minutes-generator", "destination": "/index.html" },
+    { "source": "/binance-trading-bot", "destination": "/index.html" }
+  ]
+}

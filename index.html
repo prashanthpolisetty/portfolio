@@ -7,7 +7,7 @@
   <meta name="description" content="Final-year Computer Science (AI &amp; ML) student building RAG applications, agentic workflows and Python backends with FastAPI and LangChain. Deployed a live RAG chatbot and a meeting-minutes app. Built PayPilot-AI for the Razorpay Buildathon and a hybrid LLM hallucination detection and mitigation system.">
   <meta name="keywords" content="Polisetty Prashanth, AI Engineer, Machine Learning, Generative AI, LangChain, RAG, Python, FastAPI, PayPilot-AI">
   <meta name="author" content="Polisetty Prashanth">
-  <meta name="theme-color" content="#0a0d13">
+  <meta name="theme-color" content="#0B1220">
 
   <!-- Open Graph / Twitter (link previews on LinkedIn, WhatsApp, Slack) -->
   <meta property="og:title" content="Polisetty Prashanth | AI &amp; ML Engineer">
@@ -23,8 +23,8 @@
   <meta name="twitter:description" content="Final-year Computer Science (AI &amp; ML) student building RAG applications, agentic workflows and Python backends with FastAPI and LangChain. Deployed a live RAG chatbot and a meeting-minutes app. Built PayPilot-AI for the Razorpay Buildathon and a hybrid LLM hallucination detection and mitigation system.">
   <meta name="twitter:image" content="https://portfolio-cyan-rho-91.vercel.app/og.png">
 
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="shortcut icon" href="favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.svg">
 
   <!-- Google Fonts: only the weights the site actually uses -->
   <link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -34,8 +34,8 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="upgrade.css"><!-- override layer: keep AFTER style.css -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/upgrade.css"><!-- override layer: keep AFTER style.css -->
 </head>
 <body>
   <a class="skip-link" href="#about">Skip to content</a>
@@ -52,8 +52,8 @@
   <!-- Sticky Navbar -->
   <header class="navbar-wrapper" id="navbar">
     <nav class="nav-container" aria-label="Primary">
-      <a href="#hero" class="brand-logo">
-        <img src="favicon.svg" alt="Logo" class="brand-icon" width="28" height="28">
+      <a href="/#hero" class="brand-logo">
+        <img src="/favicon.svg" alt="" class="brand-icon" width="28" height="28">
         <span class="code-bracket">&lt;</span>
         <span class="brand-name">P.Prashanth</span>
         <span class="code-bracket">/&gt;</span>
@@ -61,12 +61,12 @@
 
       <!-- Desktop Nav Menu -->
       <ul class="nav-links">
-        <li><a href="#about" class="nav-item">About</a></li>
-        <li><a href="#skills" class="nav-item">Skills</a></li>
-        <li><a href="#projects" class="nav-item">Projects</a></li>
-        <li><a href="#experience" class="nav-item">Experience</a></li>
-        <li><a href="#terminal" class="nav-item">Terminal</a></li>
-        <li><a href="#contact" class="nav-item">Contact</a></li>
+        <li><a href="/#about" class="nav-item">About</a></li>
+        <li><a href="/#skills" class="nav-item">Skills</a></li>
+        <li><a href="/#projects" class="nav-item">Projects</a></li>
+        <li><a href="/#experience" class="nav-item">Experience</a></li>
+        <li><a href="/#terminal" class="nav-item">Terminal</a></li>
+        <li><a href="/#contact" class="nav-item">Contact</a></li>
       </ul>
 
       <!-- Action Buttons -->
@@ -79,12 +79,12 @@
 
     <!-- Mobile Dropdown -->
     <div class="mobile-menu" id="mobileMenu">
-      <a href="#about" class="mobile-nav-link">About</a>
-      <a href="#skills" class="mobile-nav-link">Skills</a>
-      <a href="#projects" class="mobile-nav-link">Projects</a>
-      <a href="#experience" class="mobile-nav-link">Experience</a>
-      <a href="#terminal" class="mobile-nav-link">Terminal</a>
-      <a href="#contact" class="mobile-nav-link">Contact</a>
+      <a href="/#about" class="mobile-nav-link">About</a>
+      <a href="/#skills" class="mobile-nav-link">Skills</a>
+      <a href="/#projects" class="mobile-nav-link">Projects</a>
+      <a href="/#experience" class="mobile-nav-link">Experience</a>
+      <a href="/#terminal" class="mobile-nav-link">Terminal</a>
+      <a href="/#contact" class="mobile-nav-link">Contact</a>
     </div>
   </header>
 
@@ -102,7 +102,8 @@
         </div>
 
         <h1 class="hero-title">
-          Polisetty Prashanth
+          <img class="hero-profile-photo" src="/assets/profile.jpg" alt="Portrait of Prashanth Polisetty" width="112" height="112" fetchpriority="high">
+          <span class="hero-name">Polisetty Prashanth</span>
           <span class="hero-role">AI / ML Engineer &mdash; GenAI, RAG &amp; Python backends</span>
         </h1>
 
@@ -305,223 +306,56 @@
           <button class="filter-btn" data-filter="fintech">Fintech &amp; Tools</button>
         </div>
 
-        <!-- Project Grid -->
-        <div class="projects-grid">
+        <div class="projects-carousel" role="region" aria-roledescription="carousel" aria-label="Featured projects" aria-describedby="project-carousel-help">
+          <p class="sr-only" id="project-carousel-help">Project cards rotate continuously. Hover over the carousel or move keyboard focus into it to pause. Drag to rotate, use the previous and next buttons to browse projects, or open a card for its details.</p>
+          <div class="projects-grid">
 
           <!-- Project 1: PayPilot-AI (Flagship) -->
-          <div class="project-card glass-card" data-category="agentic fullstack">
-            <div class="project-header">
-              <div class="project-badge badge-featured">
-                <i class="fa-solid fa-star"></i> Featured / Buildathon
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank" rel="noopener noreferrer" title="View Source Code" aria-label="PayPilot-AI source code">
-                  <i class="fa-brands fa-github"></i>
-                </a>
-              </div>
-            </div>
-
-            <h3 class="project-title">PayPilot-AI: Agentic Commerce Platform</h3>
-            <p class="project-summary">
-              AI-native merchant commerce platform built for the <strong>Razorpay Buildathon (Track 01)</strong>. Implements an 18-step agentic pipeline enabling an AI buyer agent to reason over customer constraints, search product catalogs using semantic RAG vector search, propose contextual upsells, enforce deterministic transaction caps, and gate payments via human-in-the-loop authorization.
-            </p>
-
-            <div class="project-highlights">
-              <div><i class="fa-solid fa-check text-indigo"></i> 18-step agentic commerce &amp; risk decision engine</div>
-              <div><i class="fa-solid fa-check text-indigo"></i> Server-side HMAC-SHA256 Razorpay signature validation</div>
-              <div><i class="fa-solid fa-check text-indigo"></i> Deterministic financial caps (₹1,00,000 safety guardrail)</div>
-            </div>
-
-            <div class="project-tech">
-              <span>FastAPI</span>
-              <span>React 18</span>
-              <span>PostgreSQL</span>
-              <span>Razorpay API</span>
-              <span>Docker</span>
-              <span>Gemini / Groq</span>
-            </div>
-
-            <div class="project-actions">
-              <a href="https://github.com/prashanthpolisetty/PayPilot-AI" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass w-full text-center">
-                <i class="fa-brands fa-github"></i> View Source
-              </a>
-              <!-- TODO: add a demo video, GIF or architecture-diagram link here.
-                   Your flagship project is the one card without a live/demo action. -->
-            </div>
+          <div class="project-card glass-card" data-category="agentic fullstack" data-project-slug="paypilot-ai" data-project-title="PayPilot-AI" role="group" tabindex="0" aria-label="PayPilot-AI. Press Enter to open details.">
+            <h3 class="project-title">PayPilot-AI</h3>
+            <p class="project-summary">Agentic commerce platform with human-approved payments.</p>
           </div>
 
           <!-- Project 2: Document RAG Chatbot (Live Demo) -->
-          <div class="project-card glass-card" data-category="agentic">
-            <div class="project-header">
-              <div class="project-badge badge-live">
-                <span class="live-indicator"></span> Live App
-              </div>
-              <div class="project-links">
-                <a href="https://ragbotq.streamlit.app/" target="_blank" rel="noopener noreferrer" class="link-live" title="Launch Web Application" aria-label="Open RAG Chatbot live app">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-                <a href="https://github.com/prashanthpolisetty/RAG-bot" target="_blank" rel="noopener noreferrer" title="View Source Code" aria-label="RAG Chatbot source code">
-                  <i class="fa-brands fa-github"></i>
-                </a>
-              </div>
-            </div>
-
+          <div class="project-card glass-card" data-category="agentic" data-project-slug="document-rag-chatbot" data-project-title="Document RAG Chatbot" role="group" tabindex="0" aria-label="Document RAG Chatbot. Press Enter to open details.">
             <h3 class="project-title">Document RAG Chatbot</h3>
-            <p class="project-summary">
-              Interactive Retrieval-Augmented Generation (RAG) web application allowing users to upload dynamic PDF/text documents and query complex contextual insights in real-time.
-            </p>
-
-            <div class="project-highlights">
-              <div><i class="fa-solid fa-check text-cyan"></i> Uses all-MiniLM-L6-v2 embeddings and a persistent ChromaDB vector store for retrieval.</div>
-              <div><i class="fa-solid fa-check text-cyan"></i> Tags indexed text chunks with source and chunk metadata.</div>
-              <div><i class="fa-solid fa-check text-cyan"></i> Gemini API question answering with a local Ollama fallback.</div>
-            </div>
-
-            <div class="project-tech">
-              <span>Python</span>
-              <span>LangChain</span>
-              <span>ChromaDB</span>
-              <span>Gemini API / Ollama</span>
-              <span>Streamlit</span>
-            </div>
-
-            <div class="project-actions">
-              <a href="https://ragbotq.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary w-full text-center">
-                <i class="fa-solid fa-play"></i> Open App
-              </a>
-            </div>
+            <p class="project-summary">Ask questions about your PDF and text documents.</p>
           </div>
 
           <!-- Project 3: Hybrid LLM Hallucination Detection & Mitigation -->
-          <div class="project-card glass-card" data-category="agentic">
-            <div class="project-header">
-              <div class="project-badge">Trustworthy AI</div>
-            </div>
-
-            <h3 class="project-title">Hybrid LLM Hallucination Detection &amp; Mitigation</h3>
-            <p class="project-summary">
-              An end-to-end system that detects, explains and mitigates factual hallucinations in LLM answers using dual-signal verification. It fuses internal model uncertainty (self-consistency across multiple stochastic generations) with external evidence grounding (authoritative web retrieval plus DeBERTa-v3 natural language inference). An XGBoost classifier turns a 9-feature vector into a claim-level hallucination risk score.
-            </p>
-
-            <div class="project-highlights">
-              <div><i class="fa-solid fa-check text-indigo"></i> Reached 0.9744 accuracy, 0.9697 F1 and 0.9953 AUROC on HaluEval QA and TruthfulQA claim-evidence records, using leakage-safe grouped splits. A Logistic Regression baseline scored 0.9206 F1.</div>
-              <div><i class="fa-solid fa-check text-indigo"></i> Evidence-grounded mitigation: when a claim is high-risk, the contradicted claim is highlighted and the same LLM is re-prompted with the verified evidence to produce a corrected answer.</div>
-              <div><i class="fa-solid fa-check text-indigo"></i> FastAPI backend with real-time Server-Sent Events streaming and SQLite audit logging, plus a React 18 + Vite dashboard showing each pipeline stage.</div>
-            </div>
-
-            <div class="project-tech">
-              <span>Python</span>
-              <span>FastAPI</span>
-              <span>React 18</span>
-              <span>spaCy</span>
-              <span>DeBERTa-v3 NLI</span>
-              <span>XGBoost</span>
-              <span>Sentence Transformers</span>
-              <span>Gemini API</span>
-              <span>SQLite</span>
-            </div>
+          <div class="project-card glass-card" data-category="agentic" data-project-slug="hybrid-llm-hallucination-detection-mitigation" data-project-title="LLM Hallucination Detection" role="group" tabindex="0" aria-label="LLM Hallucination Detection. Press Enter to open details.">
+            <h3 class="project-title">LLM Hallucination Detection</h3>
+            <p class="project-summary">Detects and corrects factual errors in LLM answers.</p>
           </div>
 
           <!-- Project 4: AI Resume Analyzer -->
-          <div class="project-card glass-card" data-category="agentic">
-            <div class="project-header">
-              <div class="project-badge">GenAI / NLP</div>
-              <div class="project-links">
-                <a href="https://github.com/prashanthpolisetty/AI-Resume-Analyzer" target="_blank" rel="noopener noreferrer" title="View Source Code" aria-label="AI Resume Analyzer source code">
-                  <i class="fa-brands fa-github"></i>
-                </a>
-              </div>
-            </div>
-
-            <h3 class="project-title">AI Resume Screener &amp; Analyzer</h3>
-            <p class="project-summary">
-              AI resume screener built with LangChain and the Gemini API that produces ATS-style scores and skill-gap feedback as schema-validated JSON (Pydantic).
-            </p>
-
-            <div class="project-highlights">
-              <div><i class="fa-solid fa-check text-indigo"></i> Strict Pydantic JSON schema extraction for keyword gaps</div>
-              <div><i class="fa-solid fa-check text-indigo"></i> Few-shot and Chain-of-Thought prompts with Pydantic-validated JSON output.</div>
-              <div><i class="fa-solid fa-check text-indigo"></i> Comprehensive ATS scoring and grammatical index output</div>
-            </div>
-
-            <div class="project-tech">
-              <span>Python</span>
-              <span>LangChain</span>
-              <span>Google Gemini API</span>
-              <span>Pydantic</span>
-            </div>
+          <div class="project-card glass-card" data-category="agentic" data-project-slug="ai-resume-analyzer" data-project-title="AI Resume Analyzer" role="group" tabindex="0" aria-label="AI Resume Analyzer. Press Enter to open details.">
+            <h3 class="project-title">AI Resume Analyzer</h3>
+            <p class="project-summary">ATS-style resume scoring with LangChain and Gemini.</p>
           </div>
 
           <!-- Project 5: Meeting Minutes Generator (Live Demo) -->
-          <div class="project-card glass-card" data-category="agentic fullstack">
-            <div class="project-header">
-              <div class="project-badge badge-live">
-                <span class="live-indicator"></span> Live App
-              </div>
-              <div class="project-links">
-                <a href="https://meeting-minutes-frontend.onrender.com/" target="_blank" rel="noopener noreferrer" class="link-live" title="Launch Web Application" aria-label="Open Meeting Minutes Generator live app">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-                <a href="https://github.com/prashanthpolisetty/Meeting-minutes-Generator" target="_blank" rel="noopener noreferrer" title="View Source Code" aria-label="Meeting Minutes Generator source code">
-                  <i class="fa-brands fa-github"></i>
-                </a>
-              </div>
-            </div>
-
+          <div class="project-card glass-card" data-category="agentic fullstack" data-project-slug="meeting-minutes-generator" data-project-title="Meeting Minutes Generator" role="group" tabindex="0" aria-label="Meeting Minutes Generator. Press Enter to open details.">
             <h3 class="project-title">Meeting Minutes Generator</h3>
-            <p class="project-summary">
-              Autonomous AI meeting assistant that transcribes audio recordings locally with OpenAI Whisper, extracts structured summaries, key decisions, and action items via cloud LLMs, and emails participants.
-            </p>
-
-            <div class="project-highlights">
-              <div><i class="fa-solid fa-check text-cyan"></i> Local transcription with Whisper for low latency &amp; privacy</div>
-              <div><i class="fa-solid fa-check text-cyan"></i> Structured synthesis with Groq &amp; Google Gemini APIs</div>
-              <div><i class="fa-solid fa-check text-cyan"></i> Automated participant email dispatch workflow</div>
-            </div>
-
-            <div class="project-tech">
-              <span>TypeScript</span>
-              <span>Python</span>
-              <span>OpenAI Whisper</span>
-              <span>Groq API</span>
-              <span>Gemini API</span>
-            </div>
-
-            <div class="project-actions">
-              <a href="https://meeting-minutes-frontend.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary w-full text-center">
-                <i class="fa-solid fa-play"></i> Open App
-              </a>
-            </div>
+            <p class="project-summary">Turns meeting audio into summaries and action items.</p>
           </div>
 
           <!-- Project 6: Binance Trading Bot -->
-          <div class="project-card glass-card" data-category="fintech">
-            <div class="project-header">
-              <div class="project-badge">Algorithmic Bot</div>
-              <div class="project-links">
-                <a href="https://github.com/prashanthpolisetty/binance-trading-bot" target="_blank" rel="noopener noreferrer" title="View Source Code" aria-label="Binance Trading Bot source code">
-                  <i class="fa-brands fa-github"></i>
-                </a>
-              </div>
-            </div>
-
+          <div class="project-card glass-card" data-category="fintech" data-project-slug="binance-trading-bot" data-project-title="Binance Trading Bot" role="group" tabindex="0" aria-label="Binance Trading Bot. Press Enter to open details.">
             <h3 class="project-title">Binance Trading Bot</h3>
-            <p class="project-summary">
-              Automated high-speed cryptocurrency market scanner designed to calculate indicators, identify buy/sell signals, and dispatch trading triggers in under 60 seconds.
-            </p>
-
-            <div class="project-highlights">
-              <div><i class="fa-solid fa-check text-yellow"></i> Sub-minute market telemetry processing &amp; reaction</div>
-              <div><i class="fa-solid fa-check text-yellow"></i> RESTful Binance API order execution protocols</div>
-            </div>
-
-            <div class="project-tech">
-              <span>Python</span>
-              <span>Binance API</span>
-              <span>Financial Algorithms</span>
-            </div>
+            <p class="project-summary">Scans markets and flags buy and sell signals.</p>
           </div>
 
+          </div>
+          <div class="project-carousel-controls">
+            <button type="button" class="project-carousel-control" id="projectCarouselPrevious" aria-label="Previous project">
+              <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            </button>
+            <span class="project-carousel-status" id="projectCarouselStatus" aria-hidden="true"></span>
+            <button type="button" class="project-carousel-control" id="projectCarouselNext" aria-label="Next project">
+              <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -794,7 +628,7 @@
         <a href="https://github.com/prashanthpolisetty" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
         <a href="https://linkedin.com/in/polisetty-prashanth-5440b5298" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
         <a href="mailto:polisheetyprashanth246@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-        <a href="#hero" class="scroll-top-btn" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
+        <a href="/#hero" class="scroll-top-btn" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
       </div>
     </div>
   </footer>
@@ -843,7 +677,8 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
-  <script src="motion.js"></script><!-- must come AFTER app.js -->
+  <script src="/project-details.js"></script>
+  <script src="/app.js"></script>
+  <script src="/motion.js"></script><!-- must come AFTER app.js -->
 </body>
 </html>
